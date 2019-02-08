@@ -1,6 +1,7 @@
 import time
 import thread
-import geofence
+import geofence as gf
+import failsafe as fs
 
 # MODIFY THESE!!! to be the location of said data within data file string
 LATITUDE = 1
@@ -12,13 +13,13 @@ check_file = open("check_coords.csv", "w+")
 # Can either do 30s loop or continuous
 
 while(True):
-    thing = open("datafilehere.csv", "r")
-    latest_data = thing.readline()
+    all_data = open("datafilehere.csv", "r")
+    latest_data = all_data.readline()
     latit, longit = latest_data[LATITUDE], latest_data[LONGITUDE]
-    thing.close()
+    all_data.close()
     # latit, longit = 34.06868, -118.44331     --> dummy
     check_file.write(str(longit), ",", str(latit), ",\n")
-    if (inorout(latit, longit)):
+    if (gf.inorout(latit, longit)):
         count = count + 1
         # log info this line
     else:
@@ -26,6 +27,7 @@ while(True):
     if count > 5:
         # signal failsafe.py
         # log this
+        fs.cut_down()
 
 
 check_file.close()
