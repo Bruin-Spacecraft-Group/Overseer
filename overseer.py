@@ -1,7 +1,7 @@
 import time
 import thread
 import geofence as gf
-import failsafe as fs
+import cutdown as cd
 
 # MODIFY THESE!!! to be the location of said data within data file string
 LATITUDE = 1
@@ -27,7 +27,7 @@ while(True):
     if count > 5:
         # signal failsafe.py
         # log this
-        fs.cut_down()
+        cd.cut_down()
 
 
 check_file.close()
