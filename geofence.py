@@ -26,7 +26,7 @@ for i in range(len(lst)-1):
 lines[len(lst)-1] = [lst[len(lst) - 1],lst[0]]
     
 def inorout(latitude,longitude):
-    count = 0
+    count = 0     # The number of boundaries 
     for i in range(len(lines)):
         
         lat0 = lines[i][0][0]
@@ -53,9 +53,9 @@ def inorout(latitude,longitude):
                     count = count + 1
                     
                     
-    if (count % 2) == 1:
+    if (count % 2) == 1:  #S/c is in the safe area
         return True
-    else:
+    else:                 #s/c is in the dangerous area
         return False
             
 
