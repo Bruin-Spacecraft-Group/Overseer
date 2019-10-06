@@ -10,13 +10,16 @@ from shapely.geometry import Point, Polygon
 # p5 = Point(34.547257, -117.919958)
 # p6 = Point(34.566803, -117.916212)
 coords = [(34.398664,-117.989882), (34.65823,-117.924462), (34.586997,-117.510929), (34.346296,-117.557277)]
+
+# Check if coords are in or out of the Safety zone
 def checkSafety(latit, longit):
 	# Establish the region and create the polygon shape to check for coordinates
 	poly = Polygon(coords)
-	# create the point and check if it is within our specified region
+	# Create the point and check if it is within our specified region
 	point = Point(latit, longit)
 	if (point.within(poly) == False):
+		# Return -1 if coords are in the Danger zone
 		return -1
 	else:
+		# Return 0 if coords are in the Safety zone
 		return 0
-

@@ -1,6 +1,5 @@
 import time
 
-
 # The PITS outputs dms format for coordinates so we must convert to dd to read properly
 def dms_to_dd(d, m, s):
 	dd = float(d) + float(m)/60 + float(s)/3600/1000
@@ -20,8 +19,8 @@ def follow(file):
 def returntoGeo(finalLat, finalLon):
 	return finalLat, finalLon
 
-# Grab the lines from follow then split them nicely with .split(). Afterwards, just index the split string and extract GPS.
-# Must include the break statement at the end or the for loop will continue despite returning.
+# Grab the lines from the follow() function, then split them nicely with .split(). Afterwards, just index the split string and extract GPS.
+# Must include the break statement at the end or else the for loop will continue despite returning.
 def generateCoords():
 	logfile = open("/home/pi/pits/tracker/gps.txt", "r")
 	loglines = follow(logfile)

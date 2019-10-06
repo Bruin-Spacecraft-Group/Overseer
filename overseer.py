@@ -25,7 +25,7 @@ while(True):
 	check_file.write(str(datetime.datetime.now()) + ", " + str(latit) + ", " + str(longit) + "\n")
 	if (gf.checkSafety(latit, longit)):
 		count = count + 1
-		# log info this line
+		# Log info in this line
 		log_file.write(str(datetime.datetime.now()) + " Right into the Danger Zone!" + "\n")
 		#print("ERROR")
 	else:
@@ -34,8 +34,8 @@ while(True):
 		log_file.write(str(datetime.datetime.now()) + " In the Safety Zone!" + "\n")
 		#sleep(30)
 	if count > 20:
-		# signal failsafe.py
-		# log this
+		# Signal failsafe.py
+		# Log this
 		#cd.cut_down()
 		log_file.write(str(datetime.datetime.now()) + " Cutting down...Executing cutdown.py")
 		print("CUTDOWN")
@@ -44,7 +44,7 @@ while(True):
 check_file.close()
 log_file.close()
 
-	# read latest GPS coords from file -> (longit, latit)
-	# store these coords to a separate file
-	# check with geofence to see if in-out -> send result to log.py
-	# if geofence=false > 5 then signal to failsafe.py to cut -> log it
+	# Read latest GPS coords from file -> (longit, latit)
+	# Store these coords to a separate file
+	# Check with geofencev2.py to see if the coords are in or out of the Safety Zone -> send result to log.py
+	# If geofence=false > 5 then signal to failsafe.py to cut -> log it
