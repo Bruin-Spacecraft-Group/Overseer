@@ -23,8 +23,8 @@ from digi.xbee.devices import XBeeDevice
 PORT = "COM1"
 # TODO: Replace with the baud rate of your local module.
 BAUD_RATE = 9600
-CUTDOWN_VALUE = 99   # Value indicating to cutdown balloon
-SAFE_VALUE = 0       # Value indicating to not cutdown
+CUTDOWN_VALUE = 99   # Value indicating to cut down balloon
+SAFE_VALUE = 0       # Value indicating to not cut down balloon
 
 def main():
     print(" +-----------------------------------------+")
