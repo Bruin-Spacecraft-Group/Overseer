@@ -11,6 +11,7 @@ To install using HTTPS:
 ```
 git clone https://github.com/Bruin-Spacecraft-Group/Overseer.git
 ```
+## Editing Code
 
 Once you download, use the following lines in your command prompt to make your own branch for editing:
 ```
