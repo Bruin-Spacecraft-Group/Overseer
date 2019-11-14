@@ -19,7 +19,7 @@ def checkSafety(latit, longit):
 	point = Point(latit, longit)
 	if (point.within(poly) == False):
 		# Return -1 if coords are in the Danger zone
-		return -1
+		return False
 	else:
 		# Return 0 if coords are in the Safety zone
-		return 0
+		return True
