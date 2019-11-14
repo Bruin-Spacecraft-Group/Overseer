@@ -24,15 +24,16 @@ while(True):
 	#latit, longit = tm.Find_Latest_Coordinate()
 	check_file.write(str(datetime.datetime.now()) + ", " + str(latit) + ", " + str(longit) + "\n")
 	if (gf.checkSafety(latit, longit)):
-		count = count + 1
-		# Log info in this line
-		log_file.write(str(datetime.datetime.now()) + " Right into the Danger Zone!" + "\n")
-		#print("ERROR")
-	else:
 		count = 0
 		#print("SAFETY")
 		log_file.write(str(datetime.datetime.now()) + " In the Safety Zone!" + "\n")
 		#sleep(30)
+	else:
+		count = count + 1
+		# Log info in this line
+		log_file.write(str(datetime.datetime.now()) + " Right into the Danger Zone!" + "\n")
+		#print("ERROR")
+		
 	if count > 20:
 		# Signal failsafe.py
 		# Log this
