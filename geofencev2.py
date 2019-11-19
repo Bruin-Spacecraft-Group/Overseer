@@ -9,7 +9,7 @@ from shapely.geometry import Point, Polygon
 # p4 = Point(34.540518, -117.940722)
 # p5 = Point(34.547257, -117.919958)
 # p6 = Point(34.566803, -117.916212)
-coords = [(34.398664,-117.989882), (34.65823,-117.924462), (34.586997,-117.510929), (34.346296,-117.557277)]
+coords = [(25,30), (2,50), (14,9), (-10,8)]
 
 # Check if coords are in or out of the Safety zone
 def checkSafety(latit, longit):
@@ -23,3 +23,6 @@ def checkSafety(latit, longit):
 	else:
 		# Return 0 if coords are in the Safety zone
 		return 0
+
+def increment(val):
+    return val + 1

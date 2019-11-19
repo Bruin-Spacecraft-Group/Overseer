@@ -1,0 +1,31 @@
+2019-11-18 10:10:43.073023 In the Safety Zone!
+2019-11-18 10:10:43.575599 In the Safety Zone!
+2019-11-18 10:10:44.077527 In the Safety Zone!
+2019-11-18 10:10:44.579442 In the Safety Zone!
+2019-11-18 10:10:45.081216 In the Safety Zone!
+2019-11-18 10:10:45.582963 In the Safety Zone!
+2019-11-18 10:10:46.084845 In the Safety Zone!
+2019-11-18 10:10:46.586564 In the Safety Zone!
+2019-11-18 10:10:47.087941 In the Safety Zone!
+2019-11-18 10:10:47.592724 Right into the Danger Zone!
+2019-11-18 10:10:48.094262 Right into the Danger Zone!
+2019-11-18 10:10:48.595874 Right into the Danger Zone!
+2019-11-18 10:10:49.099839 Right into the Danger Zone!
+2019-11-18 10:10:49.601635 Right into the Danger Zone!
+2019-11-18 10:10:50.103414 Right into the Danger Zone!
+2019-11-18 10:10:50.608793 Right into the Danger Zone!
+2019-11-18 10:10:51.109600 Right into the Danger Zone!
+2019-11-18 10:10:51.615052 Right into the Danger Zone!
+2019-11-18 10:10:52.116825 Right into the Danger Zone!
+2019-11-18 10:10:52.620388 Right into the Danger Zone!
+2019-11-18 10:10:53.122088 Right into the Danger Zone!
+2019-11-18 10:10:53.625013 Right into the Danger Zone!
+2019-11-18 10:10:54.130168 Right into the Danger Zone!
+2019-11-18 10:10:54.631707 Right into the Danger Zone!
+2019-11-18 10:10:55.137121 Right into the Danger Zone!
+2019-11-18 10:10:55.638853 Right into the Danger Zone!
+2019-11-18 10:10:56.140397 Right into the Danger Zone!
+2019-11-18 10:10:56.642025 Right into the Danger Zone!
+2019-11-18 10:10:57.143889 Right into the Danger Zone!
+2019-11-18 10:10:57.646150 Right into the Danger Zone!
+2019-11-18 10:10:57.646203 Cutting down...Executing cutdown.py
