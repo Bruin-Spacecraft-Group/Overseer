@@ -34,12 +34,14 @@ while(True):
     # Log info in this line
         log_file.write(str(datetime.datetime.now()) + " Right into the Danger Zone!" + "\n")
         print("ERROR")
+	time.sleep(1) # adding 1 second delay
     else:
-        count = 0
+        count = 0 # if in safety zone reset to 0
         print("SAFETY")
         log_file.write(str(datetime.datetime.now()) + " In the Safety Zone!" + "\n")
+	time.sleep(1) # adding 1 second delay
     #sleep(30)
-    if count > 20:
+    if count > 60: # if it has been in the danger zone for longer than 60 seconds signal failsafe
         # Signal failsafe.py
     # Log this
     #cd.cut_down()
