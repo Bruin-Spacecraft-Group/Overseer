@@ -1,8 +1,3 @@
-# coding: utf-8
-
-# In[2]:
-
-
 # Copyright 2017, Digi International Inc.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
@@ -23,13 +18,10 @@ from digi.xbee.devices import XBeeDevice
 PORT = "COM1"
 # TODO: Replace with the baud rate of your local module.
 BAUD_RATE = 9600
-CUTDOWN_VALUE = 99   # Value indicating to cut down balloon
-SAFE_VALUE = 0       # Value indicating to not cut down balloon
+CUTDOWN_VALUE = 99   # Value indicating to cutdown balloon
+SAFE_VALUE = 0       # Value indicating to not cutdown
 
 def main():
-    print(" +-----------------------------------------+")
-    print(" | XBee Python Library Receive Data Sample |")
-    print(" +-----------------------------------------+\n")
 
     device = XBeeDevice(PORT, BAUD_RATE)
 
@@ -57,4 +49,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
