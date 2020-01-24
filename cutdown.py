@@ -9,15 +9,15 @@ relay_pin = 7
 
 GPIO.setwarnings(False)
 
-# Different pin numbering depending on board
-mode = GPIO.getmode()
 # Set the numbering mode
-GPIO.setmode(mode)
+GPIO.setmode(GPIO.BOARD)
+
 # Setup as output relay component
 GPIO.setup(relay_pin, GPIO.OUT)
 # Grab value from geofence.py and if it is true, then send a signal
+
 def cut_down():
-		GPIO.output(relay_pin, 0)
-		time.sleep(.1)
-		GPIO.output(relay_pin, 1)
-		GPIO.cleanup()
+	GPIO.output(relay_pin, 0)
+	time.sleep(.1)
+	GPIO.output(relay_pin, 1)
+	GPIO.cleanup()
