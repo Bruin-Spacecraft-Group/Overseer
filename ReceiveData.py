@@ -13,6 +13,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from digi.xbee.devices import XBeeDevice
+import cutdown as cd
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM1"
@@ -33,7 +34,8 @@ def main():
                                      xbee_message.data.decode()))
             message = xbee_message.data.decode()
             if message == "cutdown":
-                return CUTDOWN_VALUE
+                print("CUTTING DOWN THE BALLOON\N")
+                cd.cut_down()
             else:
                 return SAFE_VALUE
 
