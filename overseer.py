@@ -8,4 +8,5 @@ while(True):
     retVal = rd.data_receive_callback(inputVal)
 
     if retVal == ERROR_VALUE:
+        print("Cutting down the balloon\n")
         cd.cut_down()
