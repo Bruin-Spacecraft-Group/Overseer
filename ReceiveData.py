@@ -34,7 +34,7 @@ def main():
                                      xbee_message.data.decode()))
             message = xbee_message.data.decode()
             if message == "cutdown":
-                print("CUTTING DOWN THE BALLOON\")
+                print("CUTTING DOWN THE BALLOON\n")
                 cd.cut_down()
             else:
                 return SAFE_VALUE
