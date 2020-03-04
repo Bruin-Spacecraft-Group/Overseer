@@ -16,8 +16,8 @@ while True:
 	if(incoming == 'cutdown'):
 		print('Cutting Down The Balloon')
 		GPIO.output(23, GPIO.HIGH)
-		time.sleep(3)
+		time.sleep(120)
 		GPIO.output(23, GPIO.LOW)
-		time.sleep(3)
+		time.sleep(120)
 		
 	
