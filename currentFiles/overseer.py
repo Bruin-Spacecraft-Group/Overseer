@@ -10,14 +10,17 @@ ser = serial.Serial('/dev/ttyUSB0', 9600, timeout = .5)
 
 while True:
 	ser.write(str.encode('Hello User'))
+
+	# Receive incoming messages
 	incoming = ser.readline().strip()
 	print ('Received: ' + incoming)
 
+	# Cuts down the balloon if the incoming message is the string 'cutdown'
 	if(incoming == 'cutdown'):
 		print('Cutting Down The Balloon')
+
+		# Cut down the balloon
 		GPIO.output(23, GPIO.HIGH)
 		time.sleep(120)
 		GPIO.output(23, GPIO.LOW)
 		time.sleep(120)
-		
-	
