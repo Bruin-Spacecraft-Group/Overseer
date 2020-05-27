@@ -9,7 +9,7 @@ git clone https://github.com/Bruin-Spacecraft-Group/Overseer.git
 
 ## Editing Code on your local Overseer repository
 
-After cloning the Overseer repository, use the following lines in Terminal (for Mac OS users) to make your own branch for editing:
+After cloning the Overseer repository onto your local machine, use the following lines in Terminal (for Mac OS users) to create your own branch for individual development:
 ```
 cd Overseer
 git checkout -b <insert development-Firstname_Lastname>
