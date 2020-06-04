@@ -6,9 +6,11 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(23, GPIO.OUT)
 
-ser = serial.Serial('/dev/ttyUSB0', 9600, timeout = .5)
+ser = serial.Serial('/dev/ttyUSB0', 9600, timeout = .5) 
+	# Edit for USB port used
 
 while True:
+	# Debug
 	ser.write(str.encode('Hello User'))
 
 	# Receive incoming messages
