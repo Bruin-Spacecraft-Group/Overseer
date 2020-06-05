@@ -1,5 +1,9 @@
 # Overseer 2019-2020
 
+## Viewing previous files used in Overseer
+
+To view previous files used in Overseer, go here: https://github.com/Bruin-Spacecraft-Group/Overseer/tree/1de8b506c905792a38530c1407036a0f964ff9db
+
 ## Installation
 
 To install the current version, use the following command in Terminal (for Mac OS users):
