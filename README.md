@@ -2,7 +2,7 @@
 
 ## Viewing past files used in Overseer
 
-To view past files used in Overseer, go here: https://github.com/Bruin-Spacecraft-Group/Overseer/tree/1de8b506c905792a38530c1407036a0f964ff9db
+To view some of the past files used in Overseer, click on this link: https://github.com/Bruin-Spacecraft-Group/Overseer/tree/1de8b506c905792a38530c1407036a0f964ff9db
 
 ## Installation
 
