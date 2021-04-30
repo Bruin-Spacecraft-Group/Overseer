@@ -233,7 +233,7 @@ LandingAltitude = 609.6 #[meters]
 
 
 #Variables
-Altitude = 30480 # [meters], current altitude of the balloon
+Altitude = 30490 # [meters], current altitude of the balloon
 Latitude = 35.04
 Longitude = -117.15
 
