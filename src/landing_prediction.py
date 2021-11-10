@@ -4,9 +4,59 @@ from prediction import *
 # drive.mount('/content/drive')
 
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.signal as signal
 from collections import defaultdict
 from shapely.geometry import Point, Polygon
 
+"""
+Scale zones by a factor of percent error.
+"""
+def scaleZones(polygon, scale):
+    return polygon.affinity.scale(polygon, xfact=scale, yfact=scale)
+
+""" 
+Calculate mean squared error (MSE) given two list of y-coordinates.
+"""
+def calculateMSE(target, prediction):
+
+    if (len(target) != len(prediction)):
+        return None
+
+    sum = 0 
+    for i in range(len(target)):  
+        sum += (target[i] - prediction[i])**2 
+    return sum/len(target) 
+
+
+"""
+Calculate percent error given two list of y-coordinates.
+"""
+def calculatePercError(target, prediction):
+    return np.mean( target != prediction )
+
+
+"""
+Reduce noise on data via Kalman filter.
+Potentially reduce influence of turbulence in high-altitudes.
+"""
+def kalmanFilter(data):
+
+    # The larger N, the smoother curve.
+    N = 15  
+    NUM_COEFFICIENT = [1.0 / N] * N
+    DENOM_COEFFICIENT = 1
+    return signal.lfilter(NUM_COEFFICIENT, DENOM_COEFFICIENT, data)
+
+def savgolFilter(data):
+    WINDOW = 101
+    POLYORDER = 2
+    return signal.savgol_filter(data, WINDOW, POLYORDER)
+
+"""
+Create zones from coordinates in Google Maps CSV files.
+"""
 def createZones(): 
     PATH = "/content/drive/Shareddrives/Bruin Space/Projects/Overseer/2020-2021/Spring/Software/NewCoords"
     COORDS = "Polygon/outerBoundaryIs/LinearRing/coordinates"
