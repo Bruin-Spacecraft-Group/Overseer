@@ -1,34 +1,45 @@
-# Overseer 2021-22
+# Overseer Software's Minimalist ASTRA Simulator
 
-## Viewing past files used in Overseer
+## Warning
 
-To view some of the past files used in Overseer, click on this link: https://github.com/Bruin-Spacecraft-Group/Overseer/tree/1de8b506c905792a38530c1407036a0f964ff9db
+**Do NOT merge this branch to `master`!**
+This branch is not intended to have the source files for Overseer, nor should its contents be necessary for the ongoing development in `master`.
 
 ## Installation
 
-To install the current version, use the following command in Terminal (for Mac OS users):
 ```
-git clone https://github.com/Bruin-Spacecraft-Group/Overseer.git
-```
-
-## Individual development on the Overseer repository
-
-After cloning the Overseer repository onto your local machine, use the following lines in Terminal (for Mac OS users) to create your own branch for individual development:
-```
-cd Overseer
-git checkout -b <insert development-Firstname_Lastname>
-```
-For example:
-```
-cd Overseer
-git checkout -b development-John_Smith
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
 ```
 
-To push your development branch to the remote repository, use the following line:
+## Setup
+
+Modify the configurations in `cutdown.py`. To be specific, there are a couple of configurations that are useful for our purposes:
+
+- `launchSiteLat`
+- `launchSiteLon`
+- `launchSiteElev`
+- `dateAndTime`
+- `balloonGasType`
+- `balloonModel`
+- `nozzleLift`
+- `payloadTrainWeight`
+- `parachuteModel`
+- `cutdownAltitude`
+- `maxFlightTime`
+
+It is recommended to abstain from adding extra fields to construction, but feel free to modify anything else (nothing's stopping you).
+
+Then, to run the script:
+
 ```
-git push --set-upstream origin <insert development-Firstname_Lastname>
+python3 cutdown.py
+
+# check directory for output files, debug logs, etc.
+cat cutdown_output/out.csv # for example
 ```
-For example:
-```
-git push --set-upstream origin development-John_Smith
-```
+
+## Credits
+
+All of the work was done by [@sobester](https://github.com/sobester/astra_simulator) from the University of Southampton. If they decide they want this branch to be taken down at any point, this branch will cease to exist and be wiped from the repository's history.
