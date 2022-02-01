@@ -1,20 +1,11 @@
 # coding=utf-8
 
 """
-This file contains key data of all the balloons currently supported by the
-simulator.
-
-Data in the available_baloons_parachutes.balloons dictionary is of the form:
-    "BALLOON ID" : (weight, nominal burst diameter,
-                    Weibull lambda, Weibull k)
-
-Data in the available_balloons_parachutes.parachutes dictionary is of the form:
-    {"CHUTE ID" : A_ref}
-
-University of Southampton
+"BALLOON ID" : (weight [kg], burst diameter [m], Weibull lambda, Weibull k)
+"CHUTE ID" : A_ref
 """
+
 balloons = {
-    # Totex
     "TA10": (0.01, 0.45, 0.5045, 14.3577),
     "TA20": (0.02, 0.7, 0.7848, 14.3577),
     "TA30": (0.03, 0.88, 0.9866, 14.3577),
@@ -33,7 +24,6 @@ balloons = {
     "TA1500": (1.5, 9.44, 10.5840, 14.3577),
     "TA2000": (2, 10.54, 11.8173, 14.3577),
     "TA3000": (3, 13.0, 14.5754, 14.3577),
-    # Hwoyee
     "HW10": (0.01, 0.60, 0.6727, 14.3577),
     "HW30": (0.03, 1.00, 1.1212, 14.3577),
     "HW50": (0.05, 1.20, 1.3454, 14.3577),
@@ -53,14 +43,8 @@ balloons = {
     "HW1600": (1.6, 10.5, 11.7725, 14.3577),
     "HW2000": (2.0, 11.0, 12.3330, 14.3577)
 }
-"""Balloon data.
-
-Data is in the format: "BALLOON ID" : (weight, nominal burst diameter,
-Weibull lambda, Weibull k)
-"""
 
 meanToNominalBurstRatio = 1.08116
-
 parachutes = {
     "RCK3": 0.26615,
     "RCK4": 0.47315,
@@ -76,7 +60,3 @@ parachutes = {
     None: 0,
     "": 0
 }
-"""Parachute Data
-
-Data is in the format: "CHUTE ID" : A_ref
-"""

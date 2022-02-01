@@ -12,3 +12,5 @@ simulator/examples/astra_output*
 *.dat
 *.lprof
 *.log
+env/
+cutdown_output

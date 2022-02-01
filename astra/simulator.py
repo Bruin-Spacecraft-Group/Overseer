@@ -807,6 +807,7 @@ class flight(object):
         else:
             assert(self._preflightCompleted),\
                 "'preflight' must be run at least once before attempting a flight"
+
         # Flight-specific variables initialization
         # Prepare the flight tools to deliver results specific to this flight.
         highCD = self._highCD[flightNumber]
@@ -1253,7 +1254,7 @@ class flight(object):
         totalColumns = 6
 
         # Add one column for the header and generate an empty matrix
-        csvMatrix = numpy.zeros((totalRows + 2, totalColumns), dtype='|S100')
+        csvMatrix = numpy.zeros((totalRows + 2, totalColumns), dtype='<U100')
         # Clear the remarks column (it was full of zeros)
         # csvMatrix[:, 5] = ''
 
@@ -1311,7 +1312,7 @@ class flight(object):
 
             # Create a zipped version of the file, since it's probably big
             # (approx 150KB/simulation not compressed)
-            numpy.savetxt(outputCsv, csvMatrix, delimiter=',', fmt='%s')
+            numpy.savetxt(outputCsv, csvMatrix, delimiter=',', fmt=u'%s')
             outputCsv.flush()
 
             # Zip CSV file

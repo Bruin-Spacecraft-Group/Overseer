@@ -1,7 +1,6 @@
 # coding=utf-8
 
 """
-ASTRA High Altitude Balloon Flight Planner
 
 This module loads a table of drag data and transitions used to calculate
 deviations from standard parametrised drag model in Monte Carlo simulations.
@@ -11,22 +10,17 @@ Data courtesy of Dr Andras Sobester
 USAGE
 --------------
 
-Warning: this module is used privately and should not be used per se.
 Throughout the whole flight, only one (random) row of the transitions table
 should be used. Columns in the transitions table correspond to percentage
 deviations from original data for lowCD, highCD, transition and ReBand
 respectively.
-
-
-University of Southampton
-Niccolo' Zapponi, nz1g10@soton.ac.uk, 22/04/2013
 """
 
 __author__ = "Niccolo' Zapponi, University of Southampton, nz1g10@soton.ac.uk"
 
-import numpy
+from numpy import array
 
-transitions = numpy.array(
+transitions = array(
     [[0.1799, 0.4170, 4.1970, 0.3668],
      [0.1787, 0.3697, 3.4065, 0.5100],
      [0.2235, 0.3933, 2.8725, 0.4143],
