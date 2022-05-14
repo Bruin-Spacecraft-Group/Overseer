@@ -1,10 +1,13 @@
 import asyncio
 import csv
 from gpiozero import OutputDevice
-from subprocess import call
+from subprocess import Popen, PIPE, STDOUT
 
-# global data collection (json)
-call(["gpspipe","-w","|","fgrep","TPV",">","master.log"])
+# global data collection (json) uh
+json_cmd = "gpspipe -w | fgrep TPV > master.log"
+csv_cmd = "gpscsv -n -1 -f time,lat,lon,alt > output.csv"
+
+# call(["gpspipe","-w","|","fgrep","TPV",">","master.log"])
 
 # manual cutdown
 async def cutdown():
@@ -16,8 +19,10 @@ async def cutdown():
 # data parsing (csv)
 async def data():
   while True:
-    call(["gpscsv","-n","2","-f","time,lat,lon,alt",">","output.csv"])
+    ps = Popen(csv_cmd, shell=True, stdout=PIPE, stderr=STDOUT)
+    output = ps.communicate()[0]
     with open("output.csv", "r") as f:
       reader = csv.reader(f)
       next(reader)
+
 
