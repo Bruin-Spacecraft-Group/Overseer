@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 # global data collection (json) uh
 json_cmd = "gpspipe -w | fgrep TPV > master.log"
-csv_cmd = "gpscsv -n -1 -f time,lat,lon,alt > output.csv"
+csv_cmd = "gpscsv -n 1 -f time,lat,lon,alt > output.csv"
 
 # call(["gpspipe","-w","|","fgrep","TPV",">","master.log"])
 
