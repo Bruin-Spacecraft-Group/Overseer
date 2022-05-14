@@ -25,4 +25,6 @@ async def data():
       reader = csv.reader(f)
       next(reader)
 
+asyncio.run(data())
+
 
