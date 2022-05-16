@@ -18,6 +18,7 @@ from shapely.geometry import Point, Polygon
 csv_cmd = "gpscsv -n 1 -f time,lat,lon,alt > output.csv"
 
 run = True
+
 # manual cutdown (endless signal)
 def cutdown():
   pin = OutputDevice(4)
@@ -75,7 +76,7 @@ def main():
         time, lat, lon, alt = row[0], float(row[1]), float(row[2]), float(row[3])
     
     # pass data to geofence
-    
+    geofence(time, lat, lon, alt)
 
     sleep(5)
 
