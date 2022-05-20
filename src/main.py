@@ -107,7 +107,7 @@ def main():
         try:
             with open("output.csv", "r") as f:
                 reader = csv.reader(f)
-                reader.next()
+                reader.__next__()
                 for row in reader:
                     time,lat,lon,alt,altHAE,altMSL,climb,speed,epc,epx,epy,epv,eps,velD,velE,velN = (
                         row[0],
