@@ -18,7 +18,7 @@ from shapely.geometry import Point, Polygon
 # GLOBAL CONSTANTS
 csv_cmd = "gpscsv -n 1 -f time,lat,lon,alt,altHAE,altMSL,climb,speed,epc,epx,epy,epv,eps,velD,velE,velN > output.csv"
 run = True
-MAX_ALT = 22000
+MAX_ALT = 18000
 
 # manual cutdown (endless signal)
 def cutdown():
