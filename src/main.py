@@ -3,11 +3,12 @@ import csv
 from gpiozero import OutputDevice
 from subprocess import Popen, PIPE, STDOUT
 
+'''
 # geofence
 import prediction as pred
 import landing_prediction as land
 from shapely.geometry import Point, Polygon
-
+'''
 
 # removed asyncio - will run global connection in seperate terminal
 
@@ -27,7 +28,7 @@ def cutdown():
     pin.off()
     run = False
 
-
+'''
 # True if within redzone
 def geofence(time, lat, lon, altitude):
     pred = pred.Predictor(22000, 1.0)
@@ -58,7 +59,7 @@ def geofence(time, lat, lon, altitude):
         return True
     else:
         return False
-
+'''
 
 # position checking for cutdown
 def main():
@@ -141,12 +142,7 @@ def main():
         if alt >= MAX_ALT:
             cutdown()
         else:
-            try:
-                geofence(time, lat, lon, alt)
-            except:
-                continue
-            finally:
-                sleep(5)
+            sleep(5)
 
 
 # run
