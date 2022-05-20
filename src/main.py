@@ -15,7 +15,7 @@ from shapely.geometry import Point, Polygon
 # json_cmd = "gpspipe -w | fgrep TPV > master.log"
 
 # GLOBAL CONSTANTS
-csv_cmd = "gpscsv -n 1 -f time,lat,lon,alt > output.csv"
+csv_cmd = "gpscsv -n 1 -f time,lat,lon,alt,altHAE,altMSL,climb,speed,epc,epx,epy,epv,eps,velD,velE,velN > output.csv"
 run = True
 MAX_ALT = 22000
 
@@ -44,19 +44,21 @@ def geofence(time, lat, lon, altitude):
     def update(c):
         pred.AddGPSPosition(c)
         return Point(pred.PreviousPosition["lat"], pred.PreviousPosition["lon"])
-    
+
     # core output
-    pos = {"time": time,
-            "lat": lat,
-            "lon": lon,
-            "alt": altitude,
-            "sats": pred.PreviousPosition["sats"],
-            "fixtype": pred.PreviousPositon["fixtype"]
-        }
+    pos = {
+        "time": time,
+        "lat": lat,
+        "lon": lon,
+        "alt": altitude,
+        "sats": pred.PreviousPosition["sats"],
+        "fixtype": pred.PreviousPositon["fixtype"],
+    }
     if inZone(update(pos)):
         return True
     else:
         return False
+
 
 # position checking for cutdown
 def main():
@@ -65,11 +67,40 @@ def main():
         ps = Popen(csv_cmd, shell=True, stdout=PIPE, stderr=STDOUT)
         output = ps.communicate()[0]
         # rotating data vals
-        time, lat, lon, alt = (
+        (
+            time,
+            lat,
+            lon,
+            alt,
+            altHAE,
+            altMSL,
+            climb,
+            speed,
+            epc,
+            epx,
+            epy,
+            epv,
+            eps,
+            velD,
+            velE,
+            velN,
+        ) = (
             "",
             0.0,
             0.0,
-            0.0
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
         )
         # csv parsing
         try:
@@ -82,6 +113,28 @@ def main():
                         float(row[2]),
                         float(row[3]),
                     )
+            with open("master.csv", "a") as f:
+                writer = csv.writer(f)
+                writer.writerow(
+                    [
+                        time,
+                        lat,
+                        lon,
+                        alt,
+                        altHAE,
+                        altMSL,
+                        climb,
+                        speed,
+                        epc,
+                        epx,
+                        epy,
+                        epv,
+                        eps,
+                        velD,
+                        velE,
+                        velN,
+                    ]
+                )
         except:
             sleep(5)
         # call cutdown
