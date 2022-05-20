@@ -4,31 +4,34 @@ from gpiozero import OutputDevice
 from subprocess import Popen, PIPE, STDOUT
 
 # geofence
-from prediction import createZones, Predictor
+import prediction as pred
+import landing_prediction as land
 from shapely.geometry import Point, Polygon
-
 
 
 # removed asyncio - will run global connection in seperate terminal
 
 # global data collection (json)
-#   json_cmd = "gpspipe -w | fgrep TPV > master.log"
+# json_cmd = "gpspipe -w | fgrep TPV > master.log"
 
-# rotating csv data
+# GLOBAL CONSTANTS
 csv_cmd = "gpscsv -n 1 -f time,lat,lon,alt > output.csv"
-
 run = True
+MAX_ALT = 22000
 
 # manual cutdown (endless signal)
 def cutdown():
-  pin = OutputDevice(4)
-  pin.on()
-  run = False
+    pin = OutputDevice(4)
+    pin.on()
+    sleep(120)
+    pin.off()
+    run = False
 
 
+# True if within redzone
 def geofence(time, lat, lon, altitude):
-    pred = Predictor(40000, 17.5)
-    zones = createZones()
+    pred = pred.Predictor(22000, 1.0)
+    zones = land.createZones()
 
     # check if at red zone
     def inZone(current):
@@ -40,48 +43,58 @@ def geofence(time, lat, lon, altitude):
     # update predictor
     def update(c):
         pred.AddGPSPosition(c)
-        return Point(pred.PreviousPosition['lat'], pred.PreviousPosition['lon'])
-
-    # main loop; must feed in new positions
-    stop = 0
-    while True:
-        pos = {'time': time, 'lat': lat, 'lon': lon, 'alt': altitude, 'sats': pred.PreviousPosition['sats'], 'fixtype': pred.PreviousPositon['fixtype']}
-        
-        while altitude < pred.MaximumAltitude: #not yet at max altitude
-            continue
-        while inZone(update(pos)):
-            continue 
-        while True: # the balloon is in a white zone and also above max altitude
-            if inZone(update(pos)):
-                cutdown()
-                stop = 1
-                break
-        if stop:
-            break
+        return Point(pred.PreviousPosition["lat"], pred.PreviousPosition["lon"])
+    
+    # core output
+    pos = {"time": time,
+            "lat": lat,
+            "lon": lon,
+            "alt": altitude,
+            "sats": pred.PreviousPosition["sats"],
+            "fixtype": pred.PreviousPositon["fixtype"]
+        }
+    if inZone(update(pos)):
+        return True
+    else:
+        return False
 
 # position checking for cutdown
 def main():
-  while run:
-    # load csv data
-    ps = Popen(csv_cmd, shell=True, stdout=PIPE, stderr=STDOUT)
-    output = ps.communicate()[0]
-
-    # rotating data vals
-    time, lat, lon, alt = "",0.0,0.0,0.0
-
-    # csv parsing
-    with open("output.csv", "r") as f:
-      reader = csv.reader(f)
-      for row in reader:
-        time, lat, lon, alt = row[0], float(row[1]), float(row[2]), float(row[3])
-    
-    # pass data to geofence
-    geofence(time, lat, lon, alt)
-
-    sleep(5)
+    while run:
+        # load csv data
+        ps = Popen(csv_cmd, shell=True, stdout=PIPE, stderr=STDOUT)
+        output = ps.communicate()[0]
+        # rotating data vals
+        time, lat, lon, alt = (
+            "",
+            0.0,
+            0.0,
+            0.0
+        )
+        # csv parsing
+        try:
+            with open("output.csv", "r") as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    time, lat, lon, alt = (
+                        row[0],
+                        float(row[1]),
+                        float(row[2]),
+                        float(row[3]),
+                    )
+        except:
+            sleep(5)
+        # call cutdown
+        if alt >= MAX_ALT:
+            cutdown()
+        else:
+            try:
+                geofence(time, lat, lon, alt)
+            except:
+                continue
+            finally:
+                sleep(5)
 
 
 # run
 main()
-
-
