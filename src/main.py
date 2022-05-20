@@ -108,11 +108,23 @@ def main():
             with open("output.csv", "r") as f:
                 reader = csv.reader(f)
                 for row in reader:
-                    time, lat, lon, alt = (
+                    time,lat,lon,alt,altHAE,altMSL,climb,speed,epc,epx,epy,epv,eps,velD,velE,velN = (
                         row[0],
                         float(row[1]),
                         float(row[2]),
                         float(row[3]),
+                        float(row[4]),
+                        float(row[5]),
+                        float(row[6]),
+                        float(row[7]),
+                        float(row[8]),
+                        float(row[9]),
+                        float(row[10]),
+                        float(row[11]),
+                        float(row[12]),
+                        float(row[13]),
+                        float(row[14]),
+                        float(row[15])
                     )
             with open("master.csv", "a") as f:
                 writer = csv.writer(f)
