@@ -127,7 +127,6 @@ def main():
                         float(row[14]),
                         float(row[15])
                     )
-            print(time,lat,lon,alt,altHAE,altMSL,climb,speed,epc,epx,epy,epv,eps,velD,velE,velN)
             with open("master.csv", "a") as f:
                 writer = csv.writer(f)
                 writer.writerow(
