@@ -1,4 +1,4 @@
-from mpu6050 import mpu6050
+import mpu6050
 import smbus					#import SMBus module of I2C
 from time import sleep          #import
 
