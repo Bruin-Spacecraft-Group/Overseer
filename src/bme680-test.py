@@ -1,6 +1,6 @@
- import adafruit_bme680
- import time
- import board
+import adafruit_bme680
+import time
+import board
 
 # Create sensor object, communicating over the board's default I2C bus
 i2c = board.I2C()   # uses board.SCL and board.SDA
