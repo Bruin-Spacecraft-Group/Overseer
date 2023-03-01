@@ -3,7 +3,7 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from shapely import wkt
 
-reds = pd.read_csv('reds.csv')
+reds = pd.read_csv('~/Overseer/src/geofence/reds.csv')
 reds['shape'] = reds['shape'].apply(wkt.loads)
 
 # feed gps coords here
