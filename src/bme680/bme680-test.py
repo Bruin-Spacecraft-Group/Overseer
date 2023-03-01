@@ -19,7 +19,7 @@ altitude = bme680.altitude
 
 temp_offset = -7
 
-print("\nTemperature: %0.1f C" % bme680.temperature + temp_offset)
+print("Temperature: %0.1f C" % (bme680.temperature + temp_offset))
 print("Gas Resistance: %d ohm" % bme680.gas)
 print("Relative Humidity: %0.1f %%" % bme680.relative_humidity)
 print("Pressure: %0.3f hPa" % bme680.pressure)
