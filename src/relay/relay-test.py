@@ -8,3 +8,4 @@ while True:
     pin.on()
     sleep(2)
     pin.off()
+    sleep(2)
