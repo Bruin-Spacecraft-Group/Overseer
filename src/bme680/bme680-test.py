@@ -5,7 +5,7 @@ import board
 # on 0x77
 
 # Create sensor object, communicating over the board's default I2C bus
-i2c = board.I2C()   # defaults 0x77
+i2c = board.I2C(0x77)
 bme680 = adafruit_bme680.Adafruit_BME680_I2C(i2c)
 
 # change this to match the location's pressure (hPa) at sea level
