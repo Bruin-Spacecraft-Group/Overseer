@@ -17,7 +17,7 @@ relative_humidity = bme680.relative_humidity
 pressure = bme680.pressure
 altitude = bme680.altitude
 
-temp_offset = -7
+temp_offset = 0
 
 print("Temperature: %0.1f C" % (bme680.temperature + temp_offset))
 print("Gas Resistance: %d ohm" % bme680.gas)
