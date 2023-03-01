@@ -20,7 +20,7 @@ altitude = bme680.altitude
 temp_offset = -7.0
 
 while True:
-    print("\nTemperature: %0.1f C" % bme680.temperature + temp_offset)
+    print("Temperature:", bme680.temperature + temp_offset, " \0C")
     print("Gas: %d ohm" % bme680.gas)
     print("Humidity: %0.1f %%" % bme680.relative_humidity)
     print("Pressure: %0.3f hPa" % bme680.pressure)
