@@ -21,9 +21,9 @@ temp_offset = -7.0
 
 while True:
     print("Temperature:", bme680.temperature + temp_offset, " \0C")
-    print("Gas: %d ohm" % bme680.gas)
-    print("Humidity: %0.1f %%" % bme680.relative_humidity)
-    print("Pressure: %0.3f hPa" % bme680.pressure)
-    print("Altitude = %0.2f meters" % bme680.altitude)
+    print("Gas:", bme680.gas, "ohm")
+    print("Relative Humidity:", bme680.relative_humidity)
+    print("Pressure:", bme680.pressure, "hPa")
+    print("Altitude:", bme680.altitude, "m")
 
     time.sleep(2)
