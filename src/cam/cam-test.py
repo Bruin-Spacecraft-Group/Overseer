@@ -11,7 +11,7 @@ camera = PiCamera()
 # camera.stop_preview()
 
 # take a picture
-fname = datetime.now().strftime("%H%M%S") + ".jpg"
+fname = datetime.now().strftime("%H-%M-%S") + ".jpg"
 camera.start_preview()
 camera.capture(fname)
 camera.stop_preview()
