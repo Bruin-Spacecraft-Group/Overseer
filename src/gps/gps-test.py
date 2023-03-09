@@ -2,40 +2,41 @@ import json
 import os
 import sys
 
+# Name of output files
+global GPSDATA_FNAME = "gpsdata.json"
+global NMEA_RAW_FNAME = "nmea_raw.txt"
+
 def main():
 	convert_nmea_to_json()
 	
-	# Input loop
-	while True:
-		print("Press 1 to display all data.")
-		print("Press 2 to display longitude and latitude.")
-		print("Press 3 to display altitude.")
-		print("Press 4 to display geoid altitude")
-		print("Press \"q\" to quit.")
+	print("Press 1 to display all data.")
+	print("Press 2 to display longitude and latitude.")
+	print("Press 3 to display altitude.")
+	print("Press 4 to display geoid altitude")
+	print("Press \"q\" to quit.")
 		
-		# Available helper functions
-		commands = {
-			1: get_all,
-			2: get_lon_lat,
-			3: get_alt,
-			4: get_geoid_alt,
-			"q": sys.exit
-		}
+	# Available helper functions
+	commands = {
+		1: get_all,
+		2: get_lon_lat,
+		3: get_alt,
+		4: get_geoid_alt,
+		"q": sys.exit
+	}
 		
-		command = input(">>> ")
-		if command.isnumeric():
-			fname = input("Enter file name here: ")
-			try:
-				commands[int(command)](fname)
-			except FileNotFoundError:
-				print("File is inaccessible.")
-				sys.exit(1)
-		else:
-			try:
-				commands[command]()
-			except KeyError:
-				print("No such command available.")
-				sys.exit(1)
+	command = input(">>> ")
+	if command.isnumeric():
+		try:
+			commands[int(command)](GPSDATA_FNAME)
+		except FileNotFoundError:
+			print("File is inaccessible.")
+			sys.exit(1)
+	else:
+		try:
+			commands[command]()
+		except KeyError:
+			print("No such command available.")
+			sys.exit(1)
 			
 			
 # Captures GPS NMEA sentences, convert them into JSON objects and output to JSON file
@@ -43,10 +44,10 @@ def convert_nmea_to_json():
 	# Idea: Build a big list of JSON objects and dump all into a JSON file
 	gpsdata_json = []
 	
-	# Captures 1000 GPS NMEA sentences
+	# Captures 100 GPS NMEA sentences
 	os.system("gpspipe -r -n 100 > nmea_raw.txt")
 	
-	with open("nmea_raw.txt", "r") as file:
+	with open(NMEA_RAW_FNAME, "r") as file:
 		for line in file:
 			GPS_DATA = {
 				'fixTime': None,
@@ -72,11 +73,11 @@ def convert_nmea_to_json():
 				gpsdata_json.append(GPS_DATA)
 		
 		# Writes JSON object list to file
-		f = open("gpsdata.json","w")
+		f = open(GPSDATA_FNAME,"w")
 		json.dump(gpsdata_json, f, ensure_ascii=False, indent = 4)
 		f.close()
 	
-# Helper functions for printing various kinds of GPS data
+# Helper functions for displaying various kinds of GPS data
 
 # Prints all GPS data
 def get_all(file):
@@ -87,6 +88,7 @@ def get_all(file):
 				print(f'{key}: ', item[key])
 			print("\n")
 	sys.exit(0)
+
 
 # Prints only longitude and latitude, with directions
 def get_lon_lat(file):
@@ -99,6 +101,7 @@ def get_lon_lat(file):
 			print("Latitude Direction: ", item["Latitude Direction"])
 			print("\n")
 	sys.exit(0)
+		
 		
 # Prints altiude
 def get_alt(file):
@@ -119,6 +122,7 @@ def get_geoid_alt(file):
 		print("\n")
 	sys.exit(0)
 	
+
 # Prints fix quality
 def get_fix_qual(file):
 	data = json.load(file)
