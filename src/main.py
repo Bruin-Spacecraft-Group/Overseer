@@ -2,13 +2,18 @@
 
 
 # 1. CPU Health
+import time
+import adafruit_mpu6050
+import board
 from datetime import datetime
 from picamera import PiCamera
 from gpiozero import CPUTemperature
 import json
 import subprocess
 
-# 1. CPU Health
+# 1. CPU Health - print temp, clock, volt, top
+
+
 def get_cpu_temp():
     # get cpu temperature
     cpu = CPUTemperature()
@@ -32,7 +37,7 @@ def get_cpu_temp():
     print(outputJSON)
 
 
-# 2. Camera
+# 2. Camera - take a picture
 def camera():
     camera = PiCamera()
 
@@ -48,3 +53,14 @@ def camera():
     camera.start_preview()
     camera.capture(fname)
     camera.stop_preview()
+
+# 3. MPU6050 - print accel, gyro, temp
+def mpu6050():
+    i2c = board.I2C()  # defaults 0x68
+    mpu = adafruit_mpu6050.MPU6050(i2c)
+
+    temp_offset = -8
+
+    print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
+    print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
+    print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
