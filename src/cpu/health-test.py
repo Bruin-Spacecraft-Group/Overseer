@@ -6,8 +6,8 @@ cpu = CPUTemperature()
 import subprocess
 import json
 
-clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']).decode() # clock
-voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']).decode() # cpu voltage
+clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']).decode()[:-1] # clock
+voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']).decode()[:-1] # cpu voltage
 mpstatOutput = subprocess.check_output(['mpstat']) # cpu usage
 
 mpstatLines = mpstatOutput.splitlines()
