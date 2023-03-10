@@ -21,7 +21,7 @@ cpuUsage = mpstatLines[3].split()
 usageObject = {}
 
 for i in range(4, min(7, len(cpuUsers))):
-    usageObject[str(cpuUsers[i][1:])] = cpuUsage[i]
+    usageObject[str(cpuUsers[i][1:])] = str(cpuUsage[i])
 
 usageObjectJson = json.dumps(usageObject)
 
