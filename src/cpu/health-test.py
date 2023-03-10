@@ -2,17 +2,15 @@ from gpiozero import CPUTemperature
 
 # get cpu temperature
 cpu = CPUTemperature()
-print("CPU Temperature: " + str(cpu.temperature))
 
 import subprocess
 import json
 
-clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']) # clock
-voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']) # cpu voltage
+clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']).decode() # clock
+voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']).decode() # cpu voltage
 mpstatOutput = subprocess.check_output(['mpstat']) # cpu usage
 
 mpstatLines = mpstatOutput.splitlines()
-print(mpstatLines[3])
 cpuUsers = mpstatLines[2].split()
 cpuUsers = [x.decode() for x in cpuUsers]
 cpuUsage = mpstatLines[3].split()
