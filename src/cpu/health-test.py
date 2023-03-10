@@ -5,6 +5,7 @@ cpu = CPUTemperature()
 print("CPU Temperature: " + str(cpu.temperature))
 
 import subprocess
+import json
 
 clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']) # clock
 voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']) # cpu voltage
@@ -14,6 +15,8 @@ mpstatLines = mpstatOutput.splitlines()
 print(mpstatLines[3])
 cpuUsers = mpstatLines[2].split()
 cpuUsage = mpstatLines[3].split()
+
+
 
 usageObject = {}
 
@@ -28,7 +31,6 @@ print(cpuUsers)
 print(cpuUsage)
 
 
-import json
 
 #create json object
 outputObject = {
