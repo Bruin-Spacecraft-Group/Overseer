@@ -8,7 +8,16 @@ import subprocess
 
 clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']) # clock
 voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']) # cpu voltage
-topOutput = subprocess.check_output(['mpstat']) # cpu usage
+mpstatOutput = subprocess.check_output(['mpstat']) # cpu usage
+
+mpstatLines = mpstatOutput.split("\n")
+print(mpstatLines[3])
+cpuUsers = mpstatLines[2].split()
+cpuUsage = mpstatLines[3].split()
+
+print(cpuUsers)
+print(cpuUsage)
+
 
 import json
 
