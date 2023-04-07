@@ -44,9 +44,9 @@ def get_cpu_temp():
 
     print(cpu.temperature, end=",")
 
-    clock = clockOutput / 1000000000
+    clock = int(clockOutput) / 1000000000.0
     print(clock, end=",")
-    
+
     print(str(voltsOutput)[:-1], end=",")
 
     usage = 100 - float(cpuUsage[cpuUsers.index("%idle")])
