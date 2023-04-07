@@ -29,23 +29,28 @@ def get_cpu_temp():
     cpuUsage = mpstatLines[3].split()
     cpuUsage = [x.decode() for x in cpuUsage]
 
-    usageObject = {}
-    usageObject["idle"] = cpuUsage[cpuUsers.index("%idle")]
+    # usageObject = {}
+    # usageObject["idle"] = cpuUsage[cpuUsers.index("%idle")]
 
-    usageObjectJson = json.dumps(usageObject)
+    # usageObjectJson = json.dumps(usageObject)
 
     #create json object
-    outputObject = {
-        "t": str(cpu.temperature),
-        "c": str(clockOutput),
-        "v": str(voltsOutput),
-        "cpu": str(usageObjectJson),
-    }
+    # outputObject = {
+    #     "t": str(cpu.temperature),
+    #     "c": str(clockOutput),
+    #     "v": str(voltsOutput),
+    #     "cpu": str(usageObjectJson),
+    # }
 
     print(cpu.temperature, end=",")
-    print(clockOutput, end=",")
-    print(voltsOutput, end=",")
-    print(cpuUsage[cpuUsers.index("%idle")])
+
+    clock = clockOutput / 1000000000
+    print(clock, end=",")
+    
+    print(str(voltsOutput)[:-1], end=",")
+
+    usage = 100 - float(cpuUsage[cpuUsers.index("%idle")])
+    print(usage)
 
     # output json object
     # outputJSON = json.dumps(outputObject)
