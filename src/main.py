@@ -44,12 +44,12 @@ def get_cpu_temp():
 
     print(cpu.temperature, end=",")
 
-    clock = int(clockOutput) / 1000000000.0
+    clock = round(int(clockOutput) / 1000000000.0, 2)
     print(clock, end=",")
 
     print(str(voltsOutput)[:-1], end=",")
 
-    usage = 100 - float(cpuUsage[cpuUsers.index("%idle")])
+    usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
     print(usage)
 
     # output json object
