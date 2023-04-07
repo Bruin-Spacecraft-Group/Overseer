@@ -42,9 +42,16 @@ def get_cpu_temp():
         "cpu": str(usageObjectJson),
     }
 
+    print(cpu.temperature, end=",")
+    print(clockOutput, end=",")
+    print(voltsOutput, end=",")
+    print(usageObjectJson, end=",")
+
+    print(cpuUsage[cpuUsers.index("%idle")])
+
     # output json object
-    outputJSON = json.dumps(outputObject)
-    print(outputJSON)
+    # outputJSON = json.dumps(outputObject)
+    # print(outputJSON)
 
 
 # 2. Camera - take a picture
