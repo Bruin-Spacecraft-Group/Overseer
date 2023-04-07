@@ -45,8 +45,6 @@ def get_cpu_temp():
     print(cpu.temperature, end=",")
     print(clockOutput, end=",")
     print(voltsOutput, end=",")
-    print(usageObjectJson, end=",")
-
     print(cpuUsage[cpuUsers.index("%idle")])
 
     # output json object
