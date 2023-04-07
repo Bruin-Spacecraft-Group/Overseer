@@ -74,3 +74,8 @@ def mpu6050():
     print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
     print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
     print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
+
+
+get_cpu_temp()
+camera()
+mpu6050()
