@@ -108,6 +108,7 @@ def bme280():
     print("Pressure: %0.3f hPa" % bme680.pressure)
     print("Altitude = %0.2f meters" % bme680.altitude)
 
+# TODO: 5. GPS - print lat, lon, alt, speed, climb, eps, epc
 def gps():
     def gps_data():
         f = open("gps_data.json", "w") # create file
