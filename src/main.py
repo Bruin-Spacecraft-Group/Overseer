@@ -86,6 +86,7 @@ def mpu6050():
     print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
 
 # 4. BME280 - print temp, pressure, humidity
+import adafruit_bme680
 def bme280():
     # Create sensor object, communicating over the board's default I2C bus
     i2c = board.I2C() # defualts 0x77
