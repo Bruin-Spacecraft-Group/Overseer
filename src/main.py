@@ -2,6 +2,7 @@
 
 
 # 1. CPU Health
+import adafruit_bme680
 import time
 import adafruit_mpu6050
 import board
@@ -14,14 +15,17 @@ from decimal import Decimal
 
 # 1. CPU Health - print temp, clock, volt, top
 
+
 def cpu():
     cpu = CPUTemperature()
 
-    clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']).decode()[:-1] # clock
+    clockOutput = subprocess.check_output(
+        ['vcgencmd', 'measure_clock', 'arm']).decode()[:-1]  # clock
     clockOutput = clockOutput[clockOutput.index("=") + 1:]
-    voltsOutput = subprocess.check_output(['vcgencmd', 'measure_volts', 'core']).decode()[:-1] # cpu voltage
+    voltsOutput = subprocess.check_output(
+        ['vcgencmd', 'measure_volts', 'core']).decode()[:-1]  # cpu voltage
     voltsOutput = voltsOutput[voltsOutput.index("=") + 1:]
-    mpstatOutput = subprocess.check_output(['mpstat']) # cpu usage
+    mpstatOutput = subprocess.check_output(['mpstat'])  # cpu usage
 
     mpstatLines = mpstatOutput.splitlines()
     cpuUsers = mpstatLines[2].split()
@@ -34,7 +38,7 @@ def cpu():
 
     # usageObjectJson = json.dumps(usageObject)
 
-    #create json object
+    # create json object
     # outputObject = {
     #     "t": str(cpu.temperature),
     #     "c": str(clockOutput),
@@ -42,15 +46,15 @@ def cpu():
     #     "cpu": str(usageObjectJson),
     # }
 
-    print(cpu.temperature, end=",")
+    print("Temp:", cpu.temperature, "ºC")
 
     clock = round(int(clockOutput) / 1000000000.0, 2)
-    print(clock, end=",")
+    print("Clock:", clock, "GHz")
 
-    print(str(voltsOutput)[:-1], end=",")
+    print("Voltage:", str(voltsOutput)[:-1], "V")
 
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-    print(usage)
+    print("Usage:", usage, "%")
 
     # output json object
     # outputJSON = json.dumps(outputObject)
@@ -75,6 +79,8 @@ def camera():
     camera.stop_preview()
 
 # 3. MPU6050 - print accel, gyro, temp
+
+
 def mpu6050():
     i2c = board.I2C()  # defaults 0x68
     mpu = adafruit_mpu6050.MPU6050(i2c)
@@ -85,11 +91,13 @@ def mpu6050():
     print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
     print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
 
+
 # 4. BME280 - print temp, pressure, humidity
-import adafruit_bme680
+
+
 def bme280():
     # Create sensor object, communicating over the board's default I2C bus
-    i2c = board.I2C() # defualts 0x77
+    i2c = board.I2C()  # defualts 0x77
     bme680 = adafruit_bme680.Adafruit_BME680_I2C(i2c)
 
     # change this to match the location's pressure (hPa) at sea level
@@ -109,24 +117,30 @@ def bme280():
     print("Altitude = %0.2f meters" % bme680.altitude)
 
 # TODO: 5. GPS - print lat, lon, alt, speed, climb, eps, epc
+
+
 def gps():
     def gps_data():
-        f = open("gps_data.json", "w") # create file
-        subprocess.run(["gpspipe", "-w", "-n", "5"], stdout=f) # run and pipe to file
-        f = open("gps_data.json", "r") # read file
+        f = open("gps_data.json", "w")  # create file
+        subprocess.run(["gpspipe", "-w", "-n", "5"],
+                       stdout=f)  # run and pipe to file
+        f = open("gps_data.json", "r")  # read file
         gps_data = dict()
         for line in f:
             json_loaded = json.loads(line)
-            if json_loaded["class"] == "TPV": # only get TPV object
+            if json_loaded["class"] == "TPV":  # only get TPV object
                 gps_data = parse_json(json_loaded)
                 return gps_data
         print("No objects found")
         return gps_data
+
     def parse_json(json_data):
-        keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"] # keywords we want
+        keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv",
+                    "speed", "climb", "eps", "epc"]  # keywords we want
         data_dict = dict()
         for keyword in keywords:
-            data_dict[keyword] = json_data[keyword] # save data we want to a dictionary
+            # save data we want to a dictionary
+            data_dict[keyword] = json_data[keyword]
         return data_dict
     print(gps_data())
 
