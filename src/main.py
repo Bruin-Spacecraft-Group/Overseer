@@ -109,14 +109,6 @@ def bme280():
     print("Altitude = %0.2f meters" % bme680.altitude)
 
 def gps():
-
-    def parse_json(json_data):
-        keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"] # keywords we want
-        data_dict = dict()
-        for keyword in keywords:
-            data_dict[keyword] = json_data[keyword] # save data we want to a dictionary
-        return data_dict
-
     def gps_data():
         f = open("gps_data.json", "w") # create file
         subprocess.run(["gpspipe", "-w", "-n", "5"], stdout=f) # run and pipe to file
@@ -129,7 +121,15 @@ def gps():
                 return gps_data
         print("No objects found")
         return gps_data
+    def parse_json(json_data):
+        keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"] # keywords we want
+        data_dict = dict()
+        for keyword in keywords:
+            data_dict[keyword] = json_data[keyword] # save data we want to a dictionary
+        return data_dict
     print(gps_data())
+
+
 # time.sleep(2)
 cpu()
 camera()
