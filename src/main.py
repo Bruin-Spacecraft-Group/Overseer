@@ -14,7 +14,7 @@ from decimal import Decimal
 
 # 1. CPU Health - print temp, clock, volt, top
 
-def get_cpu_temp():
+def cpu():
     cpu = CPUTemperature()
 
     clockOutput = subprocess.check_output(['vcgencmd', 'measure_clock', 'arm']).decode()[:-1] # clock
@@ -108,8 +108,31 @@ def bme280():
     print("Pressure: %0.3f hPa" % bme680.pressure)
     print("Altitude = %0.2f meters" % bme680.altitude)
 
+def gps():
+
+    def parse_json(json_data):
+        keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"] # keywords we want
+        data_dict = dict()
+        for keyword in keywords:
+            data_dict[keyword] = json_data[keyword] # save data we want to a dictionary
+        return data_dict
+
+    def gps_data():
+        f = open("gps_data.json", "w") # create file
+        subprocess.run(["gpspipe", "-w", "-n", "5"], stdout=f) # run and pipe to file
+        f = open("gps_data.json", "r") # read file
+        gps_data = dict()
+        for line in f:
+            json_loaded = json.loads(line)
+            if json_loaded["class"] == "TPV": # only get TPV object
+                gps_data = parse_json(json_loaded)
+                return gps_data
+        print("No objects found")
+        return gps_data
+    print(gps_data())
 # time.sleep(2)
-get_cpu_temp()
+cpu()
 camera()
 mpu6050()
 bme280()
+gps()
