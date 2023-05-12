@@ -154,12 +154,14 @@ def gps():
 def relay():
     pin = LED(16)
     it = time.time()
-    while it !=  5:
+    while it != 5:
         it = time.time()
         pin.on()
         sleep(1)
         pin.off()
         sleep(1)
+        print(it)
+
 
 # time.sleep(2)
 # try each function
