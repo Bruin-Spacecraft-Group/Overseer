@@ -1,6 +1,10 @@
 
 import time
 
+# Command to run:
+# direwolf -c test_mode.conf | tee dwoutputmonitor & python3 dwListener.py
+
+
 def checkTheFile():
     # open the file called dwoutputmonitor
     # check the last 10 lines of the file
