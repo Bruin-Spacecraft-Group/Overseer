@@ -83,6 +83,7 @@ def camera():
     camera.start_preview()
     camera.capture(fname)
     camera.stop_preview()
+    print("pic: " + fname)
 
 # 3. MPU6050 - print accel, gyro, temp
 
@@ -165,24 +166,45 @@ def relay():
 
 # time.sleep(2)
 # try each function
+
+# 1. CPU - print temp, clock, voltage, usage
 try:
-    cpu()
+    with open("flight_log.txt", "a+") as f:
+        f.write(cpu())
 except:
     print("CPU Error")
+
+# 2. Camera - take a picture
 try:
-    relay()
+    with open("flight_log.txt", "a+") as f:
+        f.write(relay())
 except:
     print("Relay Error")
+
+# 3. MPU6050 - print accel, gyro, temp
 try:
-    camera()
+    with open("flight_log.txt", "a+") as f:
+        f.write(camera())
 except:
     print("Camera Error")
-    mpu6050()
+
+# 4. BME280 - print temp, pressure, humidity
 try:
-    bme280()
+    with open("flight_log.txt", "a+") as f:
+        f.write(mpu6050())
+except:
+    print("MPU6050 Error")
+
+# 5. GPS - print lat, lon, alt, speed, climb, eps, epc
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(bme280())
 except:
     print("BME280 Error")
+
+# 6. Relay - turn on and off
 try:
-    gps()
+    with open("flight_log.txt", "a+") as f:
+        f.write(gps())
 except:
     print("GPS Error")
