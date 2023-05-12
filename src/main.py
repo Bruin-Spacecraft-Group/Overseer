@@ -63,7 +63,11 @@ def cpu():
 
 # 2. Camera - take a picture
 def camera():
-    camera = PiCamera()
+    try:
+        camera = PiCamera()
+    except:
+        print("Camera not connected")
+        return
 
     # record 5 seconds
     # camera.start_preview()
