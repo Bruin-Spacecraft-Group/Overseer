@@ -146,8 +146,21 @@ def gps():
 
 
 # time.sleep(2)
-cpu()
-camera()
-mpu6050()
-bme280()
-gps()
+# try each function
+try:
+    cpu()
+except:
+    print("CPU Error")
+try:
+    camera()
+except:
+    print("Camera Error")
+    mpu6050()
+try:
+    bme280()
+except:
+    print("BME280 Error")
+try:
+    gps()
+except:
+    print("GPS Error")
