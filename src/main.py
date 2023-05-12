@@ -2,6 +2,8 @@
 
 
 # 1. CPU Health
+from time import sleep
+from gpiozero import LED
 import adafruit_bme680
 import time
 import adafruit_mpu6050
@@ -63,7 +65,11 @@ def cpu():
 
 # 2. Camera - take a picture
 def camera():
-    camera = PiCamera()
+    try:
+        camera = PiCamera()
+    except:
+        print("Camera not connected")
+        return
 
     # record 5 seconds
     # camera.start_preview()
@@ -77,6 +83,7 @@ def camera():
     camera.start_preview()
     camera.capture(fname)
     camera.stop_preview()
+    print("pic: " + fname)
 
 # 3. MPU6050 - print accel, gyro, temp
 
@@ -145,9 +152,59 @@ def gps():
     print(gps_data())
 
 
+def relay():
+    pin = LED(16)
+    it = time.time()
+    while it != 5:
+        it = time.time()
+        pin.on()
+        sleep(1)
+        pin.off()
+        sleep(1)
+        print(it)
+
+
 # time.sleep(2)
-cpu()
-camera()
-mpu6050()
-bme280()
-gps()
+# try each function
+
+# 1. CPU - print temp, clock, voltage, usage
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(cpu())
+except:
+    print("CPU Error")
+
+# 2. Camera - take a picture
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(relay())
+except:
+    print("Relay Error")
+
+# 3. MPU6050 - print accel, gyro, temp
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(camera())
+except:
+    print("Camera Error")
+
+# 4. BME280 - print temp, pressure, humidity
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(mpu6050())
+except:
+    print("MPU6050 Error")
+
+# 5. GPS - print lat, lon, alt, speed, climb, eps, epc
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(bme280())
+except:
+    print("BME280 Error")
+
+# 6. Relay - turn on and off
+try:
+    with open("flight_log.txt", "a+") as f:
+        f.write(gps())
+except:
+    print("GPS Error")
