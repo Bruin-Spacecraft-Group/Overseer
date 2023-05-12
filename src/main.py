@@ -2,6 +2,8 @@
 
 
 # 1. CPU Health
+from time import sleep
+from gpiozero import LED
 import adafruit_bme680
 import time
 import adafruit_mpu6050
@@ -149,12 +151,26 @@ def gps():
     print(gps_data())
 
 
+def relay():
+    pin = LED(16)
+    it = time.time()
+    while it !=  5:
+        it = time.time()
+        pin.on()
+        sleep(1)
+        pin.off()
+        sleep(1)
+
 # time.sleep(2)
 # try each function
 try:
     cpu()
 except:
     print("CPU Error")
+try:
+    relay()
+except:
+    print("Relay Error")
 try:
     camera()
 except:
