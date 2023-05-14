@@ -32,5 +32,8 @@ def checkOutputFile():
 
 
 while True:
-    checkOutputFile()
+    try:
+        checkOutputFile()
+    except:
+        print("Error checking uplink")
     time.sleep(5)
