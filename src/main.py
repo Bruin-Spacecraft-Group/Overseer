@@ -16,8 +16,6 @@ import subprocess
 from decimal import Decimal
 
 # 1. CPU Health - print temp, clock, volt, top
-
-
 def cpu():
     cpu = CPUTemperature()
 
@@ -35,19 +33,6 @@ def cpu():
     cpuUsage = mpstatLines[3].split()
     cpuUsage = [x.decode() for x in cpuUsage]
 
-    # usageObject = {}
-    # usageObject["idle"] = cpuUsage[cpuUsers.index("%idle")]
-
-    # usageObjectJson = json.dumps(usageObject)
-
-    # create json object
-    # outputObject = {
-    #     "t": str(cpu.temperature),
-    #     "c": str(clockOutput),
-    #     "v": str(voltsOutput),
-    #     "cpu": str(usageObjectJson),
-    # }
-
     print("Temp:", cpu.temperature, "ºC")
 
     clock = round(int(clockOutput) / 1000000000.0, 2)
@@ -57,11 +42,6 @@ def cpu():
 
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
     print("Usage:", usage, "%")
-
-    # output json object
-    # outputJSON = json.dumps(outputObject)
-    # print(outputJSON)
-
 
 # 2. Camera - take a picture
 def camera():
@@ -86,8 +66,6 @@ def camera():
     print("pic: " + fname)
 
 # 3. MPU6050 - print accel, gyro, temp
-
-
 def mpu6050():
     i2c = board.I2C()  # defaults 0x68
     mpu = adafruit_mpu6050.MPU6050(i2c)
@@ -100,8 +78,6 @@ def mpu6050():
 
 
 # 4. BME280 - print temp, pressure, humidity
-
-
 def bme280():
     # Create sensor object, communicating over the board's default I2C bus
     i2c = board.I2C()  # defualts 0x77
@@ -124,8 +100,6 @@ def bme280():
     print("Altitude = %0.2f meters" % bme680.altitude)
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
-
-
 def gps():
     def gps_data():
         f = open("gps_data.json", "w")  # create file
@@ -151,21 +125,20 @@ def gps():
         return data_dict
     print(gps_data())
 
-
-def relay():
+# Cutdown function
+def cutdown():
     pin = LED(16)
     it = time.time()
     while it != 5:
         it = time.time()
         pin.on()
-        sleep(1)
+        sleep(1) # TODO REMOVE
         pin.off()
-        sleep(1)
+        sleep(1) # TODO REMOVE
         print(it)
 
 
-# time.sleep(2)
-# try each function
+# Try each function
 
 # 1. CPU - print temp, clock, voltage, usage
 try:
@@ -177,34 +150,34 @@ except:
 # 2. Camera - take a picture
 try:
     with open("flight_log.txt", "a+") as f:
-        f.write(relay())
+        f.write(camera())
 except:
     print("Relay Error")
 
 # 3. MPU6050 - print accel, gyro, temp
 try:
     with open("flight_log.txt", "a+") as f:
-        f.write(camera())
+        f.write(mpu6050())
 except:
     print("Camera Error")
 
 # 4. BME280 - print temp, pressure, humidity
 try:
     with open("flight_log.txt", "a+") as f:
-        f.write(mpu6050())
+        f.write(bme280())
 except:
     print("MPU6050 Error")
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
 try:
     with open("flight_log.txt", "a+") as f:
-        f.write(bme280())
+        f.write(gps())
 except:
     print("BME280 Error")
 
 # 6. Relay - turn on and off
-try:
-    with open("flight_log.txt", "a+") as f:
-        f.write(gps())
-except:
-    print("GPS Error")
+# try:
+#     with open("flight_log.txt", "a+") as f:
+#         f.write(gps())
+# except:
+#     print("GPS Error")
