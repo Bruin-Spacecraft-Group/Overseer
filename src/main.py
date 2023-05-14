@@ -1,5 +1,6 @@
 # main
 
+print("Running main.py")
 
 # 1. CPU Health
 from time import sleep
@@ -181,6 +182,7 @@ except:
     print("BME280 Error")
 
 
+print("Finished main.py")
 
 # 6. Relay - turn on and off
 # try:
@@ -188,3 +190,4 @@ except:
 #         f.write(gps())
 # except:
 #     print("GPS Error")
+
