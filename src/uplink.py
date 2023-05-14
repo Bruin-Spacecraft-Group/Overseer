@@ -46,12 +46,12 @@ def checkOutputFile():
     if "cutdown" in lastTenLinesString:
         print("Activating Cutdown")
 
-        try:
-            with open("flight_log.txt", "a+") as f:
-                f.write(cutdown())
-            f.close()
-        except:
-            print("Cutdown Error")
+        # try:
+        #     with open("flight_log.txt", "a+") as f:
+        #         f.write(cutdown())
+        #     f.close()
+        # except:
+        #     print("Cutdown Error")
 
     if "picture" in lastTenLinesString:
         print("Taking Picture")
