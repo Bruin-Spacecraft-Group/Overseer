@@ -12,6 +12,7 @@ import time
 import adafruit_bme680
 from gpiozero import LED
 from time import sleep
+GPIO_PIN=27
 print("Running main.py")
 
 # 1. CPU Health
@@ -150,19 +151,13 @@ def gps():
     print(out)
     return out
 
-# Cutdown function
-
+# TODO: Cutdown function w/ nichrome test
 
 def cutdown():
-    pin = LED(16)
-    it = time.time()
-    while it != 5:
-        it = time.time()
-        pin.on()
-        sleep(1)  # TODO REMOVE
-        pin.off()
-        sleep(1)  # TODO REMOVE
-        print(it)
+    pin = LED(GPIO_PIN)
+    pin.on()
+    time.sleep(2)
+    pin.off()
 
 
 # Try each function
