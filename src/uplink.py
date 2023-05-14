@@ -40,8 +40,8 @@ def checkOutputFile():
     fileContent = file.read()
     file.close()
 
-    splitFileContent = fileContent.split("\n")
-    lastTenLines = splitFileContent[-10:]
+    # splitFileContent = fileContent.split("\n")
+    lastTenLines = fileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
     print("\n\nLast 10 lines:")
@@ -57,16 +57,6 @@ def checkOutputFile():
             subfile.close()
         except:
             print("Cutdown Error")
-
-    if "picture" in lastTenLinesString:
-        print("Taking Picture")
-        
-        try:
-            with open("flight_log.txt", "a+") as f:
-                f.write(camera())
-            f.close()
-        except:
-            print("Camera Error")
 
 while True:
     try:
