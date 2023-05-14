@@ -99,6 +99,14 @@ def bme280():
     print("Relative Humidity: %0.1f %%" % bme680.relative_humidity)
     print("Pressure: %0.3f hPa" % bme680.pressure)
     print("Altitude = %0.2f meters" % bme680.altitude)
+    output = "Temperature (BME): %0.1f C\n" % (bme680.temperature + temp_offset)
+    output += "Gas Resistance: %d ohm\n" % bme680.gas
+    output += "Relative Humidity: %0.1f %%\n" % bme680.relative_humidity
+    output += "Pressure: %0.3f hPa\n" % bme680.pressure
+    output += "Altitude = %0.2f meters\n" % bme680.altitude
+    return output
+
+    
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
 def gps():
