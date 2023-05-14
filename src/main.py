@@ -1,22 +1,24 @@
 # main
 
+from decimal import Decimal
+import subprocess
+import json
+from gpiozero import CPUTemperature
+from picamera import PiCamera
+from datetime import datetime
+import board
+import adafruit_mpu6050
+import time
+import adafruit_bme680
+from gpiozero import LED
+from time import sleep
 print("Running main.py")
 
 # 1. CPU Health
-from time import sleep
-from gpiozero import LED
-import adafruit_bme680
-import time
-import adafruit_mpu6050
-import board
-from datetime import datetime
-from picamera import PiCamera
-from gpiozero import CPUTemperature
-import json
-import subprocess
-from decimal import Decimal
 
 # 1. CPU Health - print temp, clock, volt, top
+
+
 def cpu():
     cpu = CPUTemperature()
 
@@ -45,6 +47,8 @@ def cpu():
     print("Usage:", usage, "%")
 
 # 2. Camera - take a picture
+
+
 def camera():
     try:
         camera = PiCamera()
@@ -67,6 +71,8 @@ def camera():
     print("pic: " + fname)
 
 # 3. MPU6050 - print accel, gyro, temp
+
+
 def mpu6050():
     i2c = board.I2C()  # defaults 0x68
     mpu = adafruit_mpu6050.MPU6050(i2c)
@@ -101,6 +107,8 @@ def bme280():
     print("Altitude = %0.2f meters" % bme680.altitude)
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
+
+
 def gps():
     def gps_data():
         f = open("gps_data.json", "w")  # create file
@@ -127,15 +135,17 @@ def gps():
     print(gps_data())
 
 # Cutdown function
+
+
 def cutdown():
     pin = LED(16)
     it = time.time()
     while it != 5:
         it = time.time()
         pin.on()
-        sleep(1) # TODO REMOVE
+        sleep(1)  # TODO REMOVE
         pin.off()
-        sleep(1) # TODO REMOVE
+        sleep(1)  # TODO REMOVE
         print(it)
 
 
@@ -146,9 +156,10 @@ try:
     with open("flight_log.txt", "a+") as f:
         f.write(cpu())
         f.close()
-except:
-    print(Exception("CPU Error"))
+except Exception as e:
     print("CPU Error")
+    print(e)
+
 
 # 2. Camera - take a picture
 try:
@@ -193,4 +204,3 @@ finally:
 #         f.write(gps())
 # except:
 #     print("GPS Error")
-
