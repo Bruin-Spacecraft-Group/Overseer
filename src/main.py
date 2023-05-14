@@ -70,7 +70,7 @@ def camera():
     camera.capture(fname)
     camera.stop_preview()
 
-    os.chdir("cwd")
+    os.chdir(cwd)
 
     out = "pic: " + fname + "\n"
     print(out)
