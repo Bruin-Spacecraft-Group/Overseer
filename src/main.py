@@ -69,7 +69,7 @@ def camera():
     camera.capture(fname)
     camera.stop_preview()
 
-    os.chdir("/hpme/overseer/")
+    os.chdir("/home/overseer/")
 
     out = "pic: " + fname + "\n"
     print(out)
