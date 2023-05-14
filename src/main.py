@@ -182,7 +182,7 @@ try:
         f.write(camera())
         f.close()
 except Exception as e:
-    print("Relay Error")
+    print("Camera Error")
     print(e)
 
 
@@ -192,7 +192,7 @@ try:
         f.write(mpu6050())
         f.close()
 except Exception as e:
-    print("Camera Error")
+    print("MPU Error")
     print(e)
 
 # 4. BME280 - print temp, pressure, humidity
@@ -201,7 +201,7 @@ try:
         f.write(bme280())
         f.close()
 except Exception as e:
-    print("MPU6050 Error")
+    print("BME Error")
     print(e)
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
@@ -210,7 +210,7 @@ try:
         f.write(gps())
         f.close()
 except Exception as e:
-    print("BME280 Error")
+    print("GPS Error")
     print(e)
 
 # end mesage
