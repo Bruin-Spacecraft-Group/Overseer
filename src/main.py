@@ -45,7 +45,7 @@ def cpu():
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
     out += "Usage: " + str(usage) + "%\n"
 
-    print(out)
+    # print(out)
     return out
 
 # 2. Camera - take a picture
@@ -73,7 +73,7 @@ def camera():
     os.chdir(cwd)
 
     out = "pic: " + fname + "\n"
-    print(out)
+    # print(out)
     return out
 
 # 3. MPU6050 - print accel, gyro, temp
@@ -85,14 +85,11 @@ def mpu6050():
 
     temp_offset = -8
 
-    # print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
     out = "Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2\n" % (mpu.acceleration)
-    # print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
     out += "Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s\n" % (mpu.gyro)
-    # print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
     out += "Temperature (MPU): %.2f C\n" % (mpu.temperature + temp_offset)
 
-    print(out)
+    # print(out)
     return out
 
 
@@ -123,7 +120,7 @@ def bme280():
     out += "Pressure: %0.3f hPa\n" % bme680.pressure
     out += "Altitude = %0.2f meters\n" % bme680.altitude
 
-    print(out)
+    # print(out)
     return out
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
@@ -153,7 +150,7 @@ def gps():
             data_dict[keyword] = json_data[keyword]
         return data_dict
     out = gps_data()
-    print(out)
+    # print(out)
     return out
 
 # TODO: Cutdown function w/ nichrome test
