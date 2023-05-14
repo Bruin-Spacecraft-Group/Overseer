@@ -61,7 +61,8 @@ def camera():
     # camera.stop_preview()
 
     # take a picture
-    fname = "~/FLIGHT_DATA_S23/PICTURES/" + datetime.now().strftime("%H-%M-%S") + ".jpg"
+    # fname = "~/FLIGHT_DATA_S23/PICTURES/" + 
+    fname = datetime.now().strftime("%H-%M-%S") + ".jpg"
     camera.start_preview()
     camera.capture(fname)
     camera.stop_preview()
