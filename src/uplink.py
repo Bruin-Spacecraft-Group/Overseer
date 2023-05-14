@@ -1,8 +1,36 @@
 
 import time
-from main import camera, cutdown
-
 import os
+
+from picamera import PiCamera
+from datetime import datetime
+
+from gpiozero import LED
+GPIO_PIN=27
+
+# Camera - take a picture
+def camera():
+    os.chdir("~/FLIGHT_DATA_S23/PICTURES/")
+
+    camera = PiCamera()
+    fname = datetime.now().strftime("%H-%M-%S") + ".jpg"
+    camera.start_preview()
+    camera.capture(fname)
+    camera.stop_preview()
+
+    os.chdir("~")
+
+    out = "pic: " + fname + "\n"
+    print(out)
+    return out
+
+# TODO: Cutdown function w/ nichrome test
+def cutdown():
+    print("Cutdown activated")
+    pin = LED(GPIO_PIN)
+    pin.on()
+    time.sleep(2)
+    pin.off()
 
 monitor_file_path = "~/FLIGHT_DATA_S23/flight_output.txt"
 
@@ -34,8 +62,6 @@ def checkOutputFile():
             f.close()
         except:
             print("Camera Error")
-
-
 
 while True:
     try:

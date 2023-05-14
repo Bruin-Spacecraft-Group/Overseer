@@ -10,7 +10,6 @@ import board
 import adafruit_mpu6050
 import time
 import adafruit_bme680
-from gpiozero import LED
 from time import sleep
 GPIO_PIN = 27
 print("Running main.py")
@@ -53,6 +52,8 @@ def cpu():
 
 
 def camera():
+    os.chdir("~/FLIGHT_DATA_S23/PICTURES/")
+
     camera = PiCamera()
     camera.resolution = (1920, 1080)
     # record 5 seconds
@@ -68,6 +69,9 @@ def camera():
     camera.start_preview()
     camera.capture(fname)
     camera.stop_preview()
+
+    os.chdir("~")
+
     out = "pic: " + fname + "\n"
     print(out)
     return out
@@ -209,10 +213,3 @@ except Exception as e:
 # end mesage
 finally:
     print("Finished main.py")
-
-# TODO: 6. Relay - turn on and off
-# try:
-#     with open("flight_log.txt", "a+") as f:
-#         f.write(gps())
-# except:
-#     print("GPS Error")
