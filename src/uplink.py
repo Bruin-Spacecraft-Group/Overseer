@@ -3,7 +3,7 @@ import time
 from main import camera, cutdown
 
 def checkOutputFile():
-    file = open("flight_output.txt", "r")
+    file = open("~/FLIGHT_DATA_S23/flight_output.txt", "r")
     fileContent = file.read()
     file.close()
 
