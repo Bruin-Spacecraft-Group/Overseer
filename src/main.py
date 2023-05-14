@@ -178,8 +178,9 @@ try:
     with open("flight_log.txt", "a+") as f:
         f.write(gps())
         f.close()
-except:
+except Exception as e:
     print("BME280 Error")
+    print(e)
 
 # end mesage
 finally:
