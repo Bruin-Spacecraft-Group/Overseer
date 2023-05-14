@@ -12,7 +12,7 @@ import time
 import adafruit_bme680
 from gpiozero import LED
 from time import sleep
-GPIO_PIN=27
+GPIO_PIN = 27
 print("Running main.py")
 
 # 1. CPU Health
@@ -54,6 +54,7 @@ def cpu():
 
 def camera():
     camera = PiCamera()
+    camera.resolution = (1920, 1080)
     # record 5 seconds
     # camera.start_preview()
     # camera.start_recording('video.h264')
@@ -62,7 +63,7 @@ def camera():
     # camera.stop_preview()
 
     # take a picture
-    # fname = "~/FLIGHT_DATA_S23/PICTURES/" + 
+    # fname = "~/FLIGHT_DATA_S23/PICTURES/" +
     fname = datetime.now().strftime("%H-%M-%S") + ".jpg"
     camera.start_preview()
     camera.capture(fname)
@@ -152,6 +153,7 @@ def gps():
     return out
 
 # TODO: Cutdown function w/ nichrome test
+
 
 def cutdown():
     pin = LED(GPIO_PIN)
