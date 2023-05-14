@@ -2,7 +2,7 @@ from time import sleep
 from gpiozero import LED
 
 # set to relay IN GPIO # (not the pin number)
-pin = LED(16)
+pin = LED(27)
 
 while True:
     pin.on()
