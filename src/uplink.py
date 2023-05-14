@@ -63,8 +63,6 @@ def checkOutputFile():
         except:
             print("Camera Error")
 
-
-
 while True:
     try:
         checkOutputFile()
