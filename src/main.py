@@ -147,6 +147,7 @@ try:
         f.write(cpu())
         f.close()
 except:
+    print(Exception("CPU Error"))
     print("CPU Error")
 
 # 2. Camera - take a picture
