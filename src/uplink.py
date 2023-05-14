@@ -52,9 +52,9 @@ def checkOutputFile():
         print("Activating Cutdown")
 
         try:
-            with open("flight_log.txt", "a+") as f:
-                f.write(cutdown())
-            f.close()
+            with open("flight_log.txt", "a+") as subfile:
+                subfile.write(cutdown())
+            subfile.close()
         except:
             print("Cutdown Error")
 
