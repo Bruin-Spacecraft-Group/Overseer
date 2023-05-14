@@ -151,14 +151,6 @@ def gps():
     print(out)
     return out
 
-# TODO: Cutdown function w/ nichrome test
-
-def cutdown():
-    pin = LED(GPIO_PIN)
-    pin.on()
-    time.sleep(2)
-    pin.off()
-
 
 # Try each function
 

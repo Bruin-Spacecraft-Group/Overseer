@@ -26,11 +26,11 @@ def camera():
 
 # TODO: Cutdown function w/ nichrome test
 def cutdown():
+    print("Cutdown activated")
     pin = LED(GPIO_PIN)
     pin.on()
     time.sleep(2)
     pin.off()
-
 
 monitor_file_path = "~/FLIGHT_DATA_S23/flight_output.txt"
 
