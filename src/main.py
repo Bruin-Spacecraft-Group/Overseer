@@ -181,8 +181,9 @@ try:
 except:
     print("BME280 Error")
 
-
-print("Finished main.py")
+# end mesage
+finally:
+    print("Finished main.py")
 
 # 6. Relay - turn on and off
 # try:
