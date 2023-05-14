@@ -44,7 +44,10 @@ def checkOutputFile():
     lastTenLines = splitFileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
-    print(lastTenLines)
+    print("\n\nLast 10 lines:")
+    print(lastTenLinesString)
+    print("\n\n")
+    
     if "cutdown" in lastTenLinesString:
         print("Activating Cutdown")
 
