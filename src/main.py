@@ -172,8 +172,7 @@ try:
         f.write(cpu())
         f.close()
 except Exception as e:
-    print("CPU Error")
-    print(e)
+    print("CPU Error:", e)
 
 
 # 2. Camera - take a picture
@@ -182,8 +181,7 @@ try:
         f.write(camera())
         f.close()
 except Exception as e:
-    print("Camera Error")
-    print(e)
+    print("Camera Error:", e)
 
 
 # 3. MPU6050 - print accel, gyro, temp
@@ -192,8 +190,7 @@ try:
         f.write(mpu6050())
         f.close()
 except Exception as e:
-    print("MPU Error")
-    print(e)
+    print("MPU Error:", e)
 
 # 4. BME280 - print temp, pressure, humidity
 try:
@@ -201,8 +198,7 @@ try:
         f.write(bme280())
         f.close()
 except Exception as e:
-    print("BME Error")
-    print(e)
+    print("BME Error:", e)
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
 try:
@@ -210,8 +206,7 @@ try:
         f.write(gps())
         f.close()
 except Exception as e:
-    print("GPS Error")
-    print(e)
+    print("GPS Error:", e)
 
 # end mesage
 finally:
