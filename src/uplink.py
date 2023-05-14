@@ -36,7 +36,7 @@ monitor_file_path = "~/FLIGHT_DATA_S23/flight_output.txt"
 
 def checkOutputFile():
     file = open(os.path.expanduser(monitor_file_path), "r")
-    print("Checking output file")
+    print("\n\nChecking output file")
     fileContent = file.read()
     file.close()
 
@@ -44,7 +44,7 @@ def checkOutputFile():
     lastTenLines = splitFileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
-    print(lastTenLinesString)
+    print(lastTenLines)
     if "cutdown" in lastTenLinesString:
         print("Activating Cutdown")
 
