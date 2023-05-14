@@ -21,6 +21,7 @@ def checkOutputFile():
         try:
             with open("flight_log.txt", "a+") as f:
                 f.write(cutdown())
+            f.close()
         except:
             print("Cutdown Error")
 
@@ -30,6 +31,7 @@ def checkOutputFile():
         try:
             with open("flight_log.txt", "a+") as f:
                 f.write(camera())
+            f.close()
         except:
             print("Camera Error")
 

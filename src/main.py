@@ -144,6 +144,7 @@ def cutdown():
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(cpu())
+        f.close()
 except:
     print("CPU Error")
 
@@ -151,6 +152,7 @@ except:
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(camera())
+        f.close()
 except:
     print("Relay Error")
 
@@ -158,6 +160,7 @@ except:
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(mpu6050())
+        f.close()
 except:
     print("Camera Error")
 
@@ -165,6 +168,7 @@ except:
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(bme280())
+        f.close()
 except:
     print("MPU6050 Error")
 
@@ -172,8 +176,11 @@ except:
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(gps())
+        f.close()
 except:
     print("BME280 Error")
+
+
 
 # 6. Relay - turn on and off
 # try:
