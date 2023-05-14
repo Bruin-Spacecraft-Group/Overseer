@@ -52,7 +52,7 @@ def cpu():
 
 
 def camera():
-    os.chdir("~/FLIGHT_DATA_S23/PICTURES/")
+    os.chdir("/home/overseer/FLIGHT_DATA_S23/PICTURES")
     camera = PiCamera()
     camera.resolution = (1920, 1080)
     # record 5 seconds
@@ -69,7 +69,7 @@ def camera():
     camera.capture(fname)
     camera.stop_preview()
 
-    os.chdir("~")
+    os.chdir("/home/overseer/")
 
     out = "pic: " + fname + "\n"
     print(out)
