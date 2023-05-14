@@ -38,13 +38,13 @@ def checkOutputFile():
     file = open(os.path.expanduser(monitor_file_path), "r")
     print("Checking output file")
     fileContent = file.read()
-    print(fileContent)
     file.close()
 
     splitFileContent = fileContent.split("\n")
     lastTenLines = splitFileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
+    print(lastTenLinesString)
     if "cutdown" in lastTenLinesString:
         print("Activating Cutdown")
 
