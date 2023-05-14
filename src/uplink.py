@@ -2,8 +2,12 @@
 import time
 from main import camera, cutdown
 
+import os
+
+monitor_file_path = "~/FLIGHT_DATA_S23/flight_output.txt"
+
 def checkOutputFile():
-    file = open("~\\FLIGHT_DATA_S23\\flight_output.txt", "r")
+    file = open(os.path.expanduser(monitor_file_path), "r")
     fileContent = file.read()
     file.close()
 
