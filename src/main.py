@@ -11,7 +11,7 @@ import adafruit_mpu6050
 import time
 import adafruit_bme680
 from time import sleep
-GPIO_PIN = 27
+import os
 print("Running main.py")
 
 # 1. CPU Health
@@ -53,7 +53,6 @@ def cpu():
 
 def camera():
     os.chdir("~/FLIGHT_DATA_S23/PICTURES/")
-
     camera = PiCamera()
     camera.resolution = (1920, 1080)
     # record 5 seconds
@@ -159,15 +158,7 @@ def gps():
 # TODO: Cutdown function w/ nichrome test
 
 
-def cutdown():
-    pin = LED(GPIO_PIN)
-    pin.on()
-    time.sleep(2)
-    pin.off()
-
-
 # Try each function
-
 # 1. CPU - print temp, clock, voltage, usage
 try:
     with open("flight_log.txt", "a+") as f:
