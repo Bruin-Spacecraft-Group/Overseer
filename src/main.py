@@ -36,26 +36,23 @@ def cpu():
     cpuUsage = mpstatLines[3].split()
     cpuUsage = [x.decode() for x in cpuUsage]
 
-    print("Temp:", cpu.temperature, "ºC")
+    out = "Temp: " + str(cpu.temperature) + "ºC\n"
 
     clock = round(int(clockOutput) / 1000000000.0, 2)
-    print("Clock:", clock, "GHz")
-
-    print("Voltage:", str(voltsOutput)[:-1], "V")
+    out += "Clock: " + str(clock) + "GHz\n"
+    out += "Voltage: " + str(voltsOutput)[:-1] + "V\n"
 
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-    print("Usage:", usage, "%")
+    out += "Usage: " + str(usage) + "%\n"
+
+    print(out)
+    return out
 
 # 2. Camera - take a picture
 
 
 def camera():
-    try:
-        camera = PiCamera()
-    except:
-        print("Camera not connected")
-        return
-
+    camera = PiCamera()
     # record 5 seconds
     # camera.start_preview()
     # camera.start_recording('video.h264')
@@ -68,7 +65,9 @@ def camera():
     camera.start_preview()
     camera.capture(fname)
     camera.stop_preview()
-    print("pic: " + fname)
+    out = "pic: " + fname + "\n"
+    print(out)
+    return out
 
 # 3. MPU6050 - print accel, gyro, temp
 
@@ -79,9 +78,15 @@ def mpu6050():
 
     temp_offset = -8
 
-    print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
-    print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
-    print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
+    # print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
+    out = "Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2\n" % (mpu.acceleration)
+    # print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
+    out += "Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s\n" % (mpu.gyro)
+    # print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
+    out += "Temperature (MPU): %.2f C\n" % (mpu.temperature + temp_offset)
+
+    print(out)
+    return out
 
 
 # 4. BME280 - print temp, pressure, humidity
@@ -100,11 +105,19 @@ def bme280():
     altitude = bme680.altitude
 
     temp_offset = -6.5
-    print("Temperature (BME): %0.1f C" % (bme680.temperature + temp_offset))
-    print("Gas Resistance: %d ohm" % bme680.gas)
-    print("Relative Humidity: %0.1f %%" % bme680.relative_humidity)
-    print("Pressure: %0.3f hPa" % bme680.pressure)
-    print("Altitude = %0.2f meters" % bme680.altitude)
+    # print("Temperature (BME): %0.1f C" % (bme680.temperature + temp_offset))
+    # print("Gas Resistance: %d ohm" % bme680.gas)
+    # print("Relative Humidity: %0.1f %%" % bme680.relative_humidity)
+    # print("Pressure: %0.3f hPa" % bme680.pressure)
+    # print("Altitude = %0.2f meters" % bme680.altitude)
+    out = "Temperature (BME): %0.1f C\n" % (bme680.temperature + temp_offset)
+    out += "Gas Resistance: %d ohm\n" % bme680.gas
+    out += "Relative Humidity: %0.1f %%\n" % bme680.relative_humidity
+    out += "Pressure: %0.3f hPa\n" % bme680.pressure
+    out += "Altitude = %0.2f meters\n" % bme680.altitude
+
+    print(out)
+    return out
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
 
@@ -132,7 +145,9 @@ def gps():
             # save data we want to a dictionary
             data_dict[keyword] = json_data[keyword]
         return data_dict
-    print(gps_data())
+    out = gps_data()
+    print(out)
+    return out
 
 # Cutdown function
 
@@ -166,24 +181,28 @@ try:
     with open("flight_log.txt", "a+") as f:
         f.write(camera())
         f.close()
-except:
+except Exception as e:
     print("Relay Error")
+    print(e)
+
 
 # 3. MPU6050 - print accel, gyro, temp
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(mpu6050())
         f.close()
-except:
+except Exception as e:
     print("Camera Error")
+    print(e)
 
 # 4. BME280 - print temp, pressure, humidity
 try:
     with open("flight_log.txt", "a+") as f:
         f.write(bme280())
         f.close()
-except:
+except Exception as e:
     print("MPU6050 Error")
+    print(e)
 
 # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
 try:
@@ -198,7 +217,7 @@ except Exception as e:
 finally:
     print("Finished main.py")
 
-# 6. Relay - turn on and off
+# TODO: 6. Relay - turn on and off
 # try:
 #     with open("flight_log.txt", "a+") as f:
 #         f.write(gps())
