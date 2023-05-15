@@ -35,17 +35,17 @@ def cpu():
     cpuUsage = mpstatLines[3].split()
     cpuUsage = [x.decode() for x in cpuUsage]
 
-    # out = "Temp: " + str(round(cpu.temperature, 2)) + "ºC\n"
+    out = "Temp: " + str(cpu.temperature) + "ºC\n"
 
     clock = round(int(clockOutput) / 1000000000.0, 2)
-    # out += "Clock: " + str(clock) + "GHz\n"
-    # out += "Voltage: " + str(round(voltsOutput,1))[:-1] + "V\n"
+    out += "Clock: " + str(clock) + "GHz\n"
+    out += "Voltage: " + str(voltsOutput)[:-1] + "V\n"
 
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-    # out += "Usage: " + str(usage) + "%\n"
-    out = "CPU: " + str(usage) + "%," + str(clock) + "GHz," + \
-        str(round(voltsOutput,1))[:-1] + "V," + str(round(cpu.temperature, 2)) + "ºC\n"
+    out += "Usage: " + str(usage) + "%\n"
 
+    out = "CPU," + str(cpu.temperature) + "," + str(clock) + "," + \
+        str(voltsOutput)[:-1] + "," + str(usage) + "\n" 
     print(out)
     return out
 
@@ -86,8 +86,11 @@ def mpu6050():
 
     temp_offset = -8
 
+    # print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
     out = "Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2\n" % (mpu.acceleration)
+    # print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
     out += "Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s\n" % (mpu.gyro)
+    # print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
     out += "Temperature (MPU): %.2f C\n" % (mpu.temperature + temp_offset)
 
     print(out)
