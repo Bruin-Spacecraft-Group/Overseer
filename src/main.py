@@ -86,11 +86,8 @@ def mpu6050():
 
     temp_offset = -8
 
-    # print("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (mpu.acceleration))
     out = "Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2\n" % (mpu.acceleration)
-    # print("Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s" % (mpu.gyro))
     out += "Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s\n" % (mpu.gyro)
-    # print("Temperature (MPU): %.2f C" % (mpu.temperature + temp_offset))
     out += "Temperature (MPU): %.2f C\n" % (mpu.temperature + temp_offset)
 
     print(out)

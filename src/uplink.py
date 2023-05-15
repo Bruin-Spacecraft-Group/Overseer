@@ -29,41 +29,42 @@ def cutdown():
     print("Cutdown activated")
     pin = LED(GPIO_PIN)
     pin.on()
-    time.sleep(2)
+    time.sleep(4)
     pin.off()
 
 monitor_file_path = "~/FLIGHT_DATA_S23/flight_output.txt"
 
 def checkOutputFile():
     file = open(os.path.expanduser(monitor_file_path), "r")
-    print("Checking output file")
-    fileContent = file.read()
-    print(fileContent)
+    fileContent = file.readlines()
     file.close()
 
-    splitFileContent = fileContent.split("\n")
-    lastTenLines = splitFileContent[-10:]
+    # splitFileContent = fileContent.split("\n")
+    lastTenLines = fileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
-    if "cutdown" in lastTenLinesString:
+
+    searchString = "cutdown" + datetime.now().strftime("%H-%M")
+
+    if searchString in lastTenLinesString:
         print("Activating Cutdown")
 
-        # try:
-        #     with open("flight_log.txt", "a+") as f:
-        #         f.write(cutdown())
-        #     f.close()
-        # except:
-        #     print("Cutdown Error")
+        try:
+            with open("flight_log.txt", "a+") as subfile:
+                subfile.write(cutdown())
+            subfile.close()
+        except:
+            print("Cutdown Error")
 
     if "picture" in lastTenLinesString:
         print("Taking Picture")
-        
+
         try:
-            with open("flight_log.txt", "a+") as f:
-                f.write(camera())
-            f.close()
+            with open("flight_log.txt", "a+") as subfile:
+                subfile.write(camera())
+            subfile.close()
         except:
-            print("Camera Error")
+            print("Picture Error")
 
 while True:
     try:
