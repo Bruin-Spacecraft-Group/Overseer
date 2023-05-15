@@ -44,8 +44,8 @@ def cpu():
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
     out += "Usage: " + str(usage) + "%\n"
 
-    out = "CPU," + str(cpu.temperature) + "," + str(clock) + "," + \
-        str(voltsOutput)[:-1] + "," + str(usage) + "\n" 
+    out = "CPU," + str(cpu.temperature) + "ºC" +"," + str(clock) + "GHz" +"," + \
+        str(voltsOutput)[:-1] + "V"+"," + str(usage) + "%"+"\n" 
     print(out)
     return out
 
