@@ -12,7 +12,6 @@ import time
 import adafruit_bme680
 from time import sleep
 import os
-print("Running main.py")
 
 # 1. CPU Health
 
@@ -36,14 +35,16 @@ def cpu():
     cpuUsage = mpstatLines[3].split()
     cpuUsage = [x.decode() for x in cpuUsage]
 
-    out = "Temp: " + str(cpu.temperature) + "ºC\n"
+    # out = "Temp: " + str(round(cpu.temperature, 2)) + "ºC\n"
 
     clock = round(int(clockOutput) / 1000000000.0, 2)
-    out += "Clock: " + str(clock) + "GHz\n"
-    out += "Voltage: " + str(voltsOutput)[:-1] + "V\n"
+    # out += "Clock: " + str(clock) + "GHz\n"
+    # out += "Voltage: " + str(round(voltsOutput,1))[:-1] + "V\n"
 
     usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-    out += "Usage: " + str(usage) + "%\n"
+    # out += "Usage: " + str(usage) + "%\n"
+    out = "CPU: " + str(usage) + "%," + str(clock) + "GHz," + \
+        str(round(voltsOutput,1))[:-1] + "V," + str(round(cpu.temperature, 2)) + "ºC\n"
 
     print(out)
     return out
@@ -201,7 +202,3 @@ try:
         f.close()
 except Exception as e:
     print("GPS Error:", e)
-
-# end mesage
-finally:
-    print("Finished main.py")
