@@ -160,10 +160,10 @@ class FlightControlUnit:
             gps_out = "GPS error: " + str(e)
         # 6. Write to file
         with open(self.f, "a+") as f:
-            f.write(cpu_out[0] + "\n")
+            f.write(cpu_out[1] + "\n")
             f.write(camera_out + "\n")
-            f.write(mpu_out[0] + "\n")
-            f.write(bme_out[0] + "\n")
+            f.write(mpu_out[1] + "\n")
+            f.write(bme_out[1] + "\n")
             f.write(gps_out + "\n")
             f.write("\n")
             f.close()
