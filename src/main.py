@@ -52,20 +52,8 @@ class FlightControlUnit:
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
 
-        # out = "Temp: " + str(cpu.temperature) + "ºC\n"
-        # out += "Clock: " + str(clock) + "GHz\n"
-        # out += "Voltage: " + str(voltsOutput)[:-1] + "V\n"
-        # out += "Usage: " + str(usage) + "%\n"
-
-        # TODO: remove redundancy
-        print_out = "CPU," + str(self.cpu.temperature) + "ºC" + "," + str(clock) + "GHz" + "," + \
-            str(voltsOutput)[:-1] + "V"+"," + str(usage) + "%"
-        json_out = "CPU:{\"temp\":" + str(self.cpu.temperature) + \
-            ",\"clock\":" + str(clock) + ",\"volt\":" + \
-            str(voltsOutput)[:-1] + ",\"usage\":" + str(usage) + "}"
-        csv_out = "CPU," + str(self.cpu.temperature) + "ºC" + "," + str(clock) + "GHz" + "," + \
-            str(voltsOutput)[:-1] + "V"+"," + str(usage) + "%"
-        return print_out, json_out, csv_out
+        out = str(self.cpu.temperature) + "," + str(clock) + "," + str(voltsOutput)[:-1] + "," + str(usage)
+        return out
 
     # 2. Camera - take a picture; returns json_out
     def __camera(self):
@@ -84,13 +72,8 @@ class FlightControlUnit:
         accel = self.mpu.acceleration
         gyro = self.mpu.gyro
         temp = self.mpu.temperature + self._MPU_TEMP_OFFSET
-        out = "Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2\n" % accel
-        out += "Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s\n" % gyro
-        out += "Temperature (MPU): %.2f C\n" % temp
-        print_out = out
-        json_out = "MPU6050:{\"accel\":[" + str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "],\"gyro\":[" + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "],\"temp\":" + str(temp) + "}"
-        csv_out =  "MPU6050," + str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "," + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "," + str(temp)
-        return print_out, json_out, csv_out
+        out =  str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "," + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "," + str(temp)
+        return out
 
     # 4. BME280 - print temp, pressure, humidity
     def __bme280(self):
@@ -99,15 +82,8 @@ class FlightControlUnit:
         relative_humidity = self.bme680.relative_humidity
         pressure = self.bme680.pressure
         altitude = self.bme680.altitude
-        out = "Temperature (BME): %0.1f C\n" % temperature
-        out += "Gas Resistance: %d ohm\n" % gas
-        out += "Relative Humidity: %0.1f %%\n" % relative_humidity
-        out += "Pressure: %0.3f hPa\n" % pressure
-        out += "Altitude (BME) = %0.2f meters\n" % altitude
-        print_out = out
-        json_out = "BME280:{\"temp\":" + str(temperature) + ",\"gas\":" + str(gas) + ",\"humidity\":" + str(relative_humidity) + ",\"pressure\":" + str(pressure) + ",\"altitude\":" + str(altitude) + "}"
-        csv_out = "BME280," + str(temperature) + "," + str(gas) + "," + str(relative_humidity) + "," + str(pressure) + "," + str(altitude)
-        return print_out, json_out, csv_out
+        out = str(temperature) + "," + str(gas) + "," + str(relative_humidity) + "," + str(pressure) + "," + str(altitude)
+        return out
 
     # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
     def __gps(self):
@@ -133,50 +109,40 @@ class FlightControlUnit:
                 # save data we want to a dictionary
                 data_dict[keyword] = json_data[keyword]
             return data_dict
-        out = gps_data()
-        return out
+        return gps_data()
 
     def run(self):
         # 1. CPU - print temp, clock, voltage, usage
         try:
             cpu_out = self.__cpu()
         except Exception as e:
-            cpu_out = "CPU error: " + str(e)
+            cpu_out = "err,err,err,err"
         # 2. Camera - take a picture
         try:
             camera_out = self.__camera()
         except Exception as e:
-            camera_out = "Camera error: " + str(e)
+            camera_out = "err"
         # 3. MPU6050 - print accel, gyro, temp
         try:
             mpu_out = self.__mpu6050()
         except Exception as e:
-            mpu_out = "MPU6050 error: " + str(e)
+            mpu_out = "err,err,err,err,err,err,err"
         # 4. BME280 - print temp, pressure, humidity
         try:
             bme_out = self.__bme280()
         except Exception as e:
-            bme_out = "BME280 error: " + str(e)
+            bme_out = "err,err,err,err,err"
         # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
         try:
             gps_out = self.__gps()
         except Exception as e:
-            gps_out = "GPS error: " + str(e)
+            gps_out = "err"
         # 6. Write to file
+        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + gps_out
         with open(self.f, "a+") as f:
-            f.write(cpu_out[2] + "\n")
-            f.write(camera_out + "\n")
-            f.write(mpu_out[2] + "\n")
-            f.write(bme_out[2] + "\n")
-            f.write(gps_out + "\n")
-            f.write("\n")
-            f.close()
+            f.write(out)
         # 7. Print to console
-        print(cpu_out[0])
-        print(camera_out)
-        print(mpu_out[0])
-        print(bme_out[0])
-        print(gps_out)
+        print(out)
 
 
 # Try each function
@@ -184,43 +150,6 @@ class FlightControlUnit:
 def main():
     fcu = FlightControlUnit("test_log.csv")
     fcu.run()
-    # # 1. CPU - print temp, clock, voltage, usage
-    # try:
-    #     with open("flight_log.txt", "a+") as f:
-    #         f.write(cpu())
-    #         f.close()
-    # except Exception as e:
-    #     print("CPU Error:", e)
-    # # 2. Camera - take a picture
-    # try:
-    #     with open("flight_log.txt", "a+") as f:
-    #         f.write(camera())
-    #         f.close()
-    # except Exception as e:
-    #     print("Camera Error:", e)
-    # # 3. MPU6050 - print accel, gyro, temp
-    # try:
-    #     with open("flight_log.txt", "a+") as f:
-    #         f.write(mpu6050())
-    #         f.close()
-    # except Exception as e:
-    #     print("MPU Error:", e)
-    # # 4. BME280 - print temp, pressure, humidity
-    # try:
-    #     with open("flight_log.txt", "a+") as f:
-    #         f.write(bme280())
-    #         f.close()
-    # except Exception as e:
-    #     print("BME Error:", e)
-    # # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
-    # try:
-    #     with open("flight_log.txt", "a+") as f:
-    #         f.write(gps())
-    #         f.close()
-    # except Exception as e:
-    #     print("GPS Error:", e)
-    # finally:
-    #     print("Done")
 
 if __name__ == "__main__":
     main()

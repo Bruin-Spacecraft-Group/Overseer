@@ -1,0 +1,1 @@
+cpuTemp(C),cpuClock(GHz),cpuVoltage(V),cpuUsage(%),picFname,aX,aY,aZ,gX,gY,gZ,mpuTemp(C),bmeTemp(C),gas(Ohm),relativeHumidity(%),pressure(hPa),bmeAlt(m),gpsData
