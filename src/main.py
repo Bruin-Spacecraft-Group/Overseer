@@ -182,7 +182,7 @@ class FlightControlUnit:
 # Try each function
 
 def main():
-    fcu = FlightControlUnit("test_log.txt")
+    fcu = FlightControlUnit("test_log.csv")
     fcu.run()
     # # 1. CPU - print temp, clock, voltage, usage
     # try:
