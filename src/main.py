@@ -134,15 +134,30 @@ class FlightControlUnit:
 
     def run(self):
         # 1. CPU - print temp, clock, voltage, usage
-        cpu_out = self.__cpu()
+        try:
+            cpu_out = self.__cpu()
+        except Exception as e:
+            cpu_out = "CPU error: " + str(e)
         # 2. Camera - take a picture
-        camera_out = self.__camera()
+        try:
+            camera_out = self.__camera()
+        except Exception as e:
+            camera_out = "Camera error: " + str(e)
         # 3. MPU6050 - print accel, gyro, temp
-        mpu_out = self.__mpu6050()
+        try:
+            mpu_out = self.__mpu6050()
+        except Exception as e:
+            mpu_out = "MPU6050 error: " + str(e)
         # 4. BME280 - print temp, pressure, humidity
-        bme_out = self.__bme280()
+        try:
+            bme_out = self.__bme280()
+        except Exception as e:
+            bme_out = "BME280 error: " + str(e)
         # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
-        gps_out = self.__gps()
+        try:
+            gps_out = self.__gps()
+        except Exception as e:
+            gps_out = "GPS error: " + str(e)
         # 6. Write to file
         with open(self.f, "a+") as f:
             f.write(cpu_out[0] + "\n")
@@ -152,7 +167,12 @@ class FlightControlUnit:
             f.write(gps_out + "\n")
             f.write("\n")
             f.close()
-        # 7. Send to server
+        # 7. Print to console
+        print(cpu_out[0])
+        print(camera_out)
+        print(mpu_out[0])
+        print(bme_out[0])
+        print(gps_out)
 
 
 # Try each function
