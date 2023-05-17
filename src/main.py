@@ -131,7 +131,7 @@ class FlightControlUnit:
         out = gps_data()
         return out
 
-    def run():
+    def run(self):
         # 1. CPU - print temp, clock, voltage, usage
         cpu_out = self.__cpu()
         # 2. Camera - take a picture
