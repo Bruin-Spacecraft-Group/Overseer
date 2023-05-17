@@ -115,7 +115,8 @@ class FlightControlUnit:
         # 1. CPU - print temp, clock, voltage, usage
         try:
             cpu_out = self.__cpu()
-        except:
+        except Exception as e:
+            print("Err:",e)
             cpu_out = "e,e,e,e"
         # 2. Camera - take a picture
         try:
