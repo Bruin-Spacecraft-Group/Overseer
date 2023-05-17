@@ -52,11 +52,7 @@ class FlightControlUnit:
         temp = self.cpu.temperature
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-        print(temp, self.cpu.temperature.__type__())
-        print(clock, clock.__type__())
-        print(voltsOutput, voltsOutput.__type__())
-        print(usage, usage.__type__())
-
+        #TODO: fix rouning
         out = ("%.2f" % float(temp)) + (",%.2f" + float(clock)) + (",%.2f" + float(voltsOutput)) + (",%.2f" + float(usage))
         return out
 
@@ -69,15 +65,14 @@ class FlightControlUnit:
         self.camera.capture(fname)
         self.camera.stop_preview()
         os.chdir(cwd)
-        out = "pic: " + fname
-        return out
+        return fname
 
     # 3. MPU6050 - print accel, gyro, temp; returns print_out, json_out
     def __mpu6050(self):
         accel = self.mpu.acceleration
         gyro = self.mpu.gyro
         temp = self.mpu.temperature + self._MPU_TEMP_OFFSET
-        out =  str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "," + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "," + str(temp)
+        out =  str(round(accel[0],2)) + "," + str(round(accel[1],2)) + "," + str(round(accel[2],2)) + "," + str(round(gyro[0],2)) + "," + str(round(gyro[1],2)) + "," + str(round(gyro[2],2)) + "," + str(round(temp,2))
         return out
 
     # 4. BME280 - print temp, pressure, humidity
@@ -87,7 +82,7 @@ class FlightControlUnit:
         relative_humidity = self.bme680.relative_humidity
         pressure = self.bme680.pressure
         altitude = self.bme680.altitude
-        out = str(temperature) + "," + str(gas) + "," + str(relative_humidity) + "," + str(pressure) + "," + str(altitude)
+        out = str(round(temperature,2)) + "," + str(round(gas,2)) + "," + str(round(relative_humidity,2)) + "," + str(round(pressure,2)) + "," + str(round(altitude,2))
         return out
 
     # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
