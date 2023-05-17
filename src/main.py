@@ -138,7 +138,7 @@ class FlightControlUnit:
         except:
             gps_out = "e"
         # 6. Write to file
-        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out # + "," + str(gps_out)
+        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "\n" # + "," + str(gps_out)
         with open(self.f, "a+") as f:
             f.write(out)
         # 7. Print to console
