@@ -17,8 +17,7 @@ import os
 
 
 class FlightControlUnit:
-    MPU_TEMP_OFFSET = -8
-    BME_TEMP_OFFSET = -6.5
+    
 
     def __init__(self, fname):
         self.f = fname
@@ -30,6 +29,8 @@ class FlightControlUnit:
         self.bme680 = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
         # change this to match the location's pressure (hPa) at sea level
         self.bme680.sea_level_pressure = 1014.22
+        self._MPU_TEMP_OFFSET = -8
+        self._BME_TEMP_OFFSET = -6.5
         
 
     # 1. CPU Health - print temp, clock, volt, top; returns print_out, json_out
@@ -80,7 +81,7 @@ class FlightControlUnit:
     def __mpu6050(self):
         accel = self.mpu.acceleration
         gyro = self.mpu.gyro
-        temp = self.mpu.temperature + MPU_TEMP_OFFSET
+        temp = self.mpu.temperature + self._MPU_TEMP_OFFSET
         out = "Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2\n" % accel
         out += "Gyro X:%.2f, Y: %.2f, Z: %.2f degrees/s\n" % gyro
         out += "Temperature (MPU): %.2f C\n" % temp
@@ -90,7 +91,7 @@ class FlightControlUnit:
 
     # 4. BME280 - print temp, pressure, humidity
     def __bme280(self):
-        temperature = self.bme680.temperature + BME_TEMP_OFFSET
+        temperature = self.bme680.temperature + self._BME_TEMP_OFFSET
         gas = self.bme680.gas
         relative_humidity = self.bme680.relative_humidity
         pressure = self.bme680.pressure
