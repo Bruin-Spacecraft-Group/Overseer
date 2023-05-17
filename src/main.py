@@ -53,7 +53,7 @@ class FlightControlUnit:
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
         #TODO: fix rouning
-        out = ("%.2f" % float(temp)) + (",%.2f" + float(clock)) + (",%.2f" + float(voltsOutput)) + (",%.2f" + float(usage))
+        out = ("%.2f" % float(temp)) + (",%.2f" % float(clock)) + (",%.2f" % float(voltsOutput)) + (",%.2f" % float(usage))
         return out
 
     # 2. Camera - take a picture; returns json_out
