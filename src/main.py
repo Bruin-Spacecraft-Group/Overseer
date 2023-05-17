@@ -90,7 +90,7 @@ class FlightControlUnit:
         print_out = out
         json_out = "MPU6050:{\"accel\":[" + str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "],\"gyro\":[" + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "],\"temp\":" + str(temp) + "}"
         csv_out =  "MPU6050," + str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "," + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "," + str(temp)
-        return print_out, json_out
+        return print_out, json_out, csv_out
 
     # 4. BME280 - print temp, pressure, humidity
     def __bme280(self):
@@ -106,7 +106,8 @@ class FlightControlUnit:
         out += "Altitude (BME) = %0.2f meters\n" % altitude
         print_out = out
         json_out = "BME280:{\"temp\":" + str(temperature) + ",\"gas\":" + str(gas) + ",\"humidity\":" + str(relative_humidity) + ",\"pressure\":" + str(pressure) + ",\"altitude\":" + str(altitude) + "}"
-        return print_out, json_out
+        csv_out = "BME280," + str(temperature) + "," + str(gas) + "," + str(relative_humidity) + "," + str(pressure) + "," + str(altitude)
+        return print_out, json_out, csv_out
 
     # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
     def __gps(self):
@@ -163,10 +164,10 @@ class FlightControlUnit:
             gps_out = "GPS error: " + str(e)
         # 6. Write to file
         with open(self.f, "a+") as f:
-            f.write(cpu_out[1] + "\n")
+            f.write(cpu_out[2] + "\n")
             f.write(camera_out + "\n")
-            f.write(mpu_out[1] + "\n")
-            f.write(bme_out[1] + "\n")
+            f.write(mpu_out[2] + "\n")
+            f.write(bme_out[2] + "\n")
             f.write(gps_out + "\n")
             f.write("\n")
             f.close()
