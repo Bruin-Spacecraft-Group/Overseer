@@ -52,7 +52,7 @@ class FlightControlUnit:
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
 
-        out = ("%.2f" % self.cpu.temperature) + (",%.2f" & clock) + ("," + str(voltsOutput)[:-1]) + (",%.2f" % usage)
+        out = ("%.2f" % float(self.cpu.temperature)) + (",%.2f" + float(clock)) + (",%.2f" + float(voltsOutput)) + (",%.2f" + float(usage))
         return out
 
     # 2. Camera - take a picture; returns json_out
@@ -115,8 +115,7 @@ class FlightControlUnit:
         # 1. CPU - print temp, clock, voltage, usage
         try:
             cpu_out = self.__cpu()
-        except Exception as e:
-            print("Err:",e)
+        except:
             cpu_out = "e,e,e,e"
         # 2. Camera - take a picture
         try:
