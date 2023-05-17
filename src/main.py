@@ -24,7 +24,7 @@ class FlightControlUnit:
         self.f = fname
         self.cpu = CPUTemperature()
         self.camera = PiCamera()
-        camera.resolution = (1920, 1080)
+        self.camera.resolution = (1920, 1080)
         self.i2c = board.I2C()  # MPU defaults 0x68, BME defaults 0x77
         self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
         self.bme = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
