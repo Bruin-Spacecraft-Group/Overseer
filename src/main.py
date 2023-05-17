@@ -78,7 +78,7 @@ class FlightControlUnit:
     # 4. BME280 - print temp, pressure, humidity
     def __bme280(self):
         temperature = self.bme680.temperature + self._BME_TEMP_OFFSET
-        gas = self.bme680.gas
+        gas = self.bme680.gas / 1000
         relative_humidity = self.bme680.relative_humidity
         pressure = self.bme680.pressure
         altitude = self.bme680.altitude
@@ -138,7 +138,7 @@ class FlightControlUnit:
         except:
             gps_out = "e"
         # 6. Write to file
-        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + str(gps_out)
+        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out # + "," + str(gps_out)
         with open(self.f, "a+") as f:
             f.write(out)
         # 7. Print to console
