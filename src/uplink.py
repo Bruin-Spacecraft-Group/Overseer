@@ -49,7 +49,8 @@ def checkOutputFile():
     lastTenLines = fileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
-    searchString = "cutdown" + datetime.now().strftime("%H-%M")
+    # IMPORTANT: choose string
+    searchString = "cutdown"
 
     if searchString in lastTenLinesString:
         print("Activating Cutdown")

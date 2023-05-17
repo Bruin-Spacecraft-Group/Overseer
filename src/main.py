@@ -63,7 +63,9 @@ class FlightControlUnit:
         json_out = "CPU:{\"temp\":" + str(self.cpu.temperature) + \
             ",\"clock\":" + str(clock) + ",\"volt\":" + \
             str(voltsOutput)[:-1] + ",\"usage\":" + str(usage) + "}"
-        return print_out, json_out
+        csv_out = "CPU," + str(self.cpu.temperature) + "ºC" + "," + str(clock) + "GHz" + "," + \
+            str(voltsOutput)[:-1] + "V"+"," + str(usage) + "%"
+        return print_out, json_out, csv_out
 
     # 2. Camera - take a picture; returns json_out
     def __camera(self):
@@ -74,8 +76,8 @@ class FlightControlUnit:
         self.camera.capture(fname)
         self.camera.stop_preview()
         os.chdir(cwd)
-        json_out = "pic: " + fname
-        return json_out
+        out = "pic: " + fname
+        return out
 
     # 3. MPU6050 - print accel, gyro, temp; returns print_out, json_out
     def __mpu6050(self):
@@ -87,6 +89,7 @@ class FlightControlUnit:
         out += "Temperature (MPU): %.2f C\n" % temp
         print_out = out
         json_out = "MPU6050:{\"accel\":[" + str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "],\"gyro\":[" + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "],\"temp\":" + str(temp) + "}"
+        csv_out =  "MPU6050," + str(accel[0]) + "," + str(accel[1]) + "," + str(accel[2]) + "," + str(gyro[0]) + "," + str(gyro[1]) + "," + str(gyro[2]) + "," + str(temp)
         return print_out, json_out
 
     # 4. BME280 - print temp, pressure, humidity
