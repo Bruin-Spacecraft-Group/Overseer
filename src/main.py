@@ -58,8 +58,8 @@ class FlightControlUnit:
         temp = self.cpu.temperature
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-        #TODO: fix rouning
-        out = str(round(temp,2)) + "," + str(round(clock,2)) + "," + str(round(voltsOutput,2)) + "," + str(round(usage,2))
+        #TODO: fix rounding
+        out = str(temp) + "," + str(clock) + "," + str(voltsOutput)[:-1] + "," + str(usage)
         return out
 
     # 2. Camera - take a picture; returns json_out
