@@ -27,7 +27,7 @@ class FlightControlUnit:
         self.camera.resolution = (1920, 1080)
         self.i2c = board.I2C()  # MPU defaults 0x68, BME defaults 0x77
         self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
-        self.bme = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
+        self.bme680 = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
         # change this to match the location's pressure (hPa) at sea level
         self.bme680.sea_level_pressure = 1014.22
         
