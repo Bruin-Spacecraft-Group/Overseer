@@ -20,17 +20,23 @@ class FlightControlUnit:
     
 
     def __init__(self, fname):
+        self.initStatus = True
         self.f = fname
-        self.cpu = CPUTemperature()
-        self.camera = PiCamera()
-        self.camera.resolution = (1920, 1080)
-        self.i2c = board.I2C()  # MPU defaults 0x68, BME defaults 0x77
-        self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
-        self.bme680 = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
-        # change this to match the location's pressure (hPa) at sea level
-        self.bme680.sea_level_pressure = 1014.22
+        
         self._MPU_TEMP_OFFSET = -8
         self._BME_TEMP_OFFSET = -6.5
+        try:
+            self.cpu = CPUTemperature()
+            self.camera = PiCamera()
+            self.camera.resolution = (1920, 1080)
+            self.i2c = board.I2C()  # MPU defaults 0x68, BME defaults 0x77
+            self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
+            self.bme680 = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
+            # change this to match the location's pressure (hPa) at sea level
+            self.bme680.sea_level_pressure = 1014.22
+        except:
+            self.initStatus = False
+
         
 
     # 1. CPU Health - print temp, clock, volt, top; returns print_out, json_out
@@ -112,6 +118,11 @@ class FlightControlUnit:
         return gps_data()
 
     def run(self):
+        if (self.initStatus == False):
+            print("Error initializing sensors")
+            with open(self.f, "a+") as f:
+                f.write("Error initializing sensors\n")
+            return
         # 1. CPU - print temp, clock, voltage, usage
         try:
             cpu_out = self.__cpu()
