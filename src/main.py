@@ -52,7 +52,7 @@ class FlightControlUnit:
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
 
-        out = str(self.cpu.temperature) + "," + str(clock) + "," + str(voltsOutput)[:-1] + "," + str(usage)
+        out = str(round(self.cpu.temperature,2)) + "," + str(round(clock,2)) + "," + str(round(voltsOutput,2))[:-1] + "," + str(round(usage,2))
         return out
 
     # 2. Camera - take a picture; returns json_out
@@ -115,28 +115,28 @@ class FlightControlUnit:
         # 1. CPU - print temp, clock, voltage, usage
         try:
             cpu_out = self.__cpu()
-        except Exception as e:
-            cpu_out = "err,err,err,err"
+        except:
+            cpu_out = "e,e,e,e"
         # 2. Camera - take a picture
         try:
             camera_out = self.__camera()
-        except Exception as e:
-            camera_out = "err"
+        except:
+            camera_out = "e"
         # 3. MPU6050 - print accel, gyro, temp
         try:
             mpu_out = self.__mpu6050()
-        except Exception as e:
-            mpu_out = "err,err,err,err,err,err,err"
+        except:
+            mpu_out = "e,e,e,e,e,e,e"
         # 4. BME280 - print temp, pressure, humidity
         try:
             bme_out = self.__bme280()
-        except Exception as e:
-            bme_out = "err,err,err,err,err"
+        except:
+            bme_out = "e,e,e,e,e"
         # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
         try:
             gps_out = self.__gps()
-        except Exception as e:
-            gps_out = "err"
+        except:
+            gps_out = "e"
         # 6. Write to file
         out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + gps_out
         with open(self.f, "a+") as f:
