@@ -3,7 +3,7 @@ import json, subprocess
 
 def parse_json(json_data):
   # caapture values of keys ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"]
-  keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"]
+  keywords = ["lat", "lon", "epx", "epy", "epv", "speed", "climb", "eps", "epc"]
   data_dict = dict()
   for keyword in keywords:
     data_dict[keyword] = json_data[keyword]
