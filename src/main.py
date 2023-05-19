@@ -17,29 +17,42 @@ import os
 
 
 class FlightControlUnit:
-    
 
     def __init__(self, fname):
         self.initStatus = True
         self.f = fname
-        
+
         self._MPU_TEMP_OFFSET = -8
         self._BME_TEMP_OFFSET = -6.5
         try:
             self.cpu = CPUTemperature()
+        except:
+            print("Error initializing CPU")
+        try:
             self.camera = PiCamera()
+        except:
+            print("Error initializing camera")
+        try:
             self.camera.resolution = (1920, 1080)
+        except:
+            print("Error setting camera resolution")
+        try:
             self.i2c = board.I2C()  # MPU defaults 0x68, BME defaults 0x77
+        except:
+            print("Error initializing I2C")
+        try:
             self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
+        except:
+            print("Error initializing MPU6050")
+        try:
             self.bme680 = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
             # change this to match the location's pressure (hPa) at sea level
             self.bme680.sea_level_pressure = 1014.22
         except:
-            self.initStatus = False
-
-        
+            print("Error initializing BME680")
 
     # 1. CPU Health - print temp, clock, volt, top; returns print_out, json_out
+
     def __cpu(self):
         clockOutput = subprocess.check_output(
             ['vcgencmd', 'measure_clock', 'arm']).decode()[:-1]  # clock
@@ -58,8 +71,9 @@ class FlightControlUnit:
         temp = self.cpu.temperature
         clock = round(int(clockOutput) / 1000000000.0, 2)
         usage = round(100 - float(cpuUsage[cpuUsers.index("%idle")]), 2)
-        #TODO: fix rounding
-        out = str(round(temp,2)) + "," + str(round(clock,2)) + "," + str(voltsOutput)[:4] + "," + str(round(usage,2))
+        # TODO: fix rounding
+        out = str(round(temp, 2)) + "," + str(round(clock, 2)) + \
+            "," + str(voltsOutput)[:4] + "," + str(round(usage, 2))
         return out
 
     # 2. Camera - take a picture; returns json_out
@@ -78,7 +92,8 @@ class FlightControlUnit:
         accel = self.mpu.acceleration
         gyro = self.mpu.gyro
         temp = self.mpu.temperature + self._MPU_TEMP_OFFSET
-        out =  str(round(accel[0],2)) + "," + str(round(accel[1],2)) + "," + str(round(accel[2],2)) + "," + str(round(gyro[0],2)) + "," + str(round(gyro[1],2)) + "," + str(round(gyro[2],2)) + "," + str(round(temp,2))
+        out = str(round(accel[0], 2)) + "," + str(round(accel[1], 2)) + "," + str(round(accel[2], 2)) + "," + str(
+            round(gyro[0], 2)) + "," + str(round(gyro[1], 2)) + "," + str(round(gyro[2], 2)) + "," + str(round(temp, 2))
         return out
 
     # 4. BME280 - print temp, pressure, humidity
@@ -88,7 +103,8 @@ class FlightControlUnit:
         relative_humidity = self.bme680.relative_humidity
         pressure = self.bme680.pressure
         altitude = self.bme680.altitude
-        out = str(round(temperature,2)) + "," + str(round(gas,2)) + "," + str(round(relative_humidity,2)) + "," + str(round(pressure,2)) + "," + str(round(altitude,2))
+        out = str(round(temperature, 2)) + "," + str(round(gas, 2)) + "," + str(round(
+            relative_humidity, 2)) + "," + str(round(pressure, 2)) + "," + str(round(altitude, 2))
         return out
 
     # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
@@ -118,11 +134,6 @@ class FlightControlUnit:
         return gps_data()
 
     def run(self):
-        if (self.initStatus == False):
-            print("Error initializing sensors")
-            with open(self.f, "a+") as f:
-                f.write("Error initializing sensors\n")
-            return
         # 1. CPU - print temp, clock, voltage, usage
         try:
             cpu_out = self.__cpu()
@@ -149,8 +160,12 @@ class FlightControlUnit:
         except:
             gps_out = "e"
         # 6. Write to file
-        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "\n" # + "," + str(gps_out)
+        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "\n" + "," + ",".join(gps_out.values()) + "\n"
         with open(self.f, "a+") as f:
+            f.write(out)
+        with open(self.f+"2", "a+") as f:
+            f.write(out)
+        with open(self.f+"3", "a+") as f:
             f.write(out)
         # 7. Print to console
         print(out)
@@ -159,8 +174,10 @@ class FlightControlUnit:
 # Try each function
 
 def main():
-    fcu = FlightControlUnit("test_log.csv")
+    fcu = FlightControlUnit(
+        "/home/overseer/FLIGHT_DATA_S23/DATA/flight_log.csv")
     fcu.run()
+
 
 if __name__ == "__main__":
     main()
