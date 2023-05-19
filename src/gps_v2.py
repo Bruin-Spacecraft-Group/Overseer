@@ -21,6 +21,8 @@ def gps():
           pass
         try:
           gps_data.append(json_loaded["altHAE"])
+        except:
+          pass
         try:
           gps_data.append(json_loaded["epx"])
         except:
