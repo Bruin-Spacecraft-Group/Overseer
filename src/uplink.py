@@ -12,19 +12,22 @@ GPIO_PIN = 27
 
 
 def camera():
-    os.chdir("~/FLIGHT_DATA_S23/PICTURES/")
-
     camera = PiCamera()
-    fname = datetime.now().strftime("%H:%M:%S") + ".jpg"
+    camera.resolution = (1920, 1080)
+
+    cwd = os.getcwd()
+    os.chdir("/home/overseer/FLIGHT_DATA_S23/PICTURES")
+    fname = datetime.now().strftime("%H:%M:%S") + ".h264"
+
     camera.start_preview()
-    camera.capture(fname)
+    camera.start_recording(fname)
+    camera.wait_recording(5)
+    camera.stop_recording()
     camera.stop_preview()
 
-    os.chdir("~")
-
-    out = "pic: " + fname + "\n"
-    print(out)
-    return out
+    os.chdir(cwd)
+    
+    return fname
 
 # TODO: Cutdown function w/ nichrome test
 
@@ -45,7 +48,6 @@ def checkOutputFile():
     fileContent = file.readlines()
     file.close()
 
-    # splitFileContent = fileContent.split("\n")
     lastTenLines = fileContent[-10:]
     lastTenLinesString = "\n".join(lastTenLines)
 
@@ -62,15 +64,17 @@ def checkOutputFile():
         except:
             print("Cutdown Error")
 
-    if "picture" in lastTenLinesString:
-        print("Taking Picture")
+    searchString = "activateVideo"
+
+    if searchString in lastTenLinesString:
+        print("Taking Video")
 
         try:
             with open("flight_log.txt", "a+") as subfile:
                 subfile.write(camera())
             subfile.close()
         except:
-            print("Picture Error")
+            print("Video Error")
 
 
 while True:
