@@ -158,7 +158,7 @@ class FlightControlUnit:
         try:
             gps_out = self.__gps()
         except:
-            gps_out = "e"
+            gps_out = {"1": "e", "2": "e", "3": "e", "4": "e", "5": "e", "6": "e", "7": "e", "8": "e", "9": "e", "10": "e"}
         # 6. Write to file
         out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "\n" + "," + ",".join(gps_out.values()) + "\n"
         with open(self.f, "a+") as f:
