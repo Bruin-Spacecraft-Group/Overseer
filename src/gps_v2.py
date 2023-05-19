@@ -19,6 +19,7 @@ def gps():
         for line in f:
             json_loaded = json.loads(line)
             if json_loaded["class"] == "TPV":
+                print(json_loaded)
                 gps_data = parse_json(json_loaded)
                 return gps_data
         print("No objects found")
