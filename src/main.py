@@ -133,6 +133,7 @@ class FlightControlUnit:
             return data_dict
         return gps_data()
 
+
     def run(self):
         # 1. CPU - print temp, clock, voltage, usage
         try:
