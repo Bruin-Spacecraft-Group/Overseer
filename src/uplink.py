@@ -10,7 +10,7 @@ GPIO_PIN = 27
 
 # Camera - take a picture
 
-
+# WE DONT USE THIS ANYMORE - because we can only have 1 instance at a time and race condition is bad with main
 def camera():
     camera = PiCamera()
     camera.resolution = (1920, 1080)
