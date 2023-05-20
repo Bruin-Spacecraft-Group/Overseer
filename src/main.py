@@ -2,7 +2,7 @@
 
 from decimal import Decimal
 import subprocess
-import json
+from json import loads
 from gpiozero import CPUTemperature
 from picamera import PiCamera
 from datetime import datetime
@@ -109,29 +109,59 @@ class FlightControlUnit:
 
     # 5. GPS - print lat, lon, alt, speed, climb, eps, epc
     def __gps(self):
-        def gps_data():
-            f = open("gps_data.json", "w")  # create file
-            subprocess.run(["gpspipe", "-w", "-n", "5"],
-                           stdout=f)  # run and pipe to file
-            f = open("gps_data.json", "r")  # read file
-            gps_data = dict()
+        rets = []
+        json_out = {}
+        with open("gps_data.json", "w") as f:
+            subprocess.run(["gpspipe", "-w", "-n", "5"], stdout=f)
+        with open("gps_data.json", "r") as f:
+            gps_data = []
             for line in f:
-                json_loaded = json.loads(line)
-                if json_loaded["class"] == "TPV":  # only get TPV object
-                    gps_data = parse_json(json_loaded)
-                    return gps_data
-            print("No objects found")
-            return gps_data
+            json_loaded = loads(line)
+            if json_loaded["class"] == "TPV":
+                json_out = json_loaded
+                break
+        try:
+            rets.append(json_out["lat"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["lon"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["altHAE"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["epx"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["epy"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["epv"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["speed"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["climb"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["eps"])
+        except:
+            rets.append("e")
+        try:
+            rets.append(json_out["epc"])
+        except:
+            rets.append("e")
+        return rets
 
-        def parse_json(json_data):
-            keywords = ["lat", "lon", "altHAE", "epx", "epy", "epv",
-                        "speed", "climb", "eps", "epc"]  # keywords we want
-            data_dict = dict()
-            for keyword in keywords:
-                # save data we want to a dictionary
-                data_dict[keyword] = json_data[keyword]
-            return data_dict
-        return gps_data()
 
 
     def run(self):
@@ -161,7 +191,7 @@ class FlightControlUnit:
         except:
             gps_out = {"1": "e", "2": "e", "3": "e", "4": "e", "5": "e", "6": "e", "7": "e", "8": "e", "9": "e", "10": "e"}
         # 6. Write to file
-        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "\n" #TODO: "," + ",".join(gps_out.values()) +
+        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + ",".join(gps_out)
         with open(self.f, "a+") as f:
             f.write(out)
         with open(self.f+"2", "a+") as f:
