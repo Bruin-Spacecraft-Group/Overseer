@@ -192,11 +192,11 @@ class FlightControlUnit:
             gps_out = {"1": "e", "2": "e", "3": "e", "4": "e", "5": "e", "6": "e", "7": "e", "8": "e", "9": "e", "10": "e"}
         # 6. Write to file
         out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + ",".join(gps_out) + "\n"
-        with open(self.f, "a+") as f:
+        with open(self.f+"_1.csv", "a+") as f:
             f.write(out)
-        with open(self.f+"2", "a+") as f:
+        with open(self.f+"_2"+".csv", "a+") as f:
             f.write(out)
-        with open(self.f+"3", "a+") as f:
+        with open(self.f+"_3", "a+") as f:
             f.write(out)
         # 7. Print to console
         print(out)
@@ -205,8 +205,9 @@ class FlightControlUnit:
 # Try each function
 
 def main():
+    # DO NOT ENTER FILE EXTENSION - only the naame you want the base file to be, we save as .csv
     fcu = FlightControlUnit(
-        "/home/overseer/FLIGHT_DATA_S23/DATA/flight_log.csv")
+        "/home/overseer/FLIGHT_DATA_S23/DATA/flight_log")
     fcu.run()
 
 
