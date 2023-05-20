@@ -52,7 +52,7 @@ def checkOutputFile():
     lastTenLinesString = "\n".join(lastTenLines)
 
     # IMPORTANT: choose string
-    searchString = "cutdown"
+    searchString = "cutdownOverseer"
 
     if searchString in lastTenLinesString:
         print("Activating Cutdown")
