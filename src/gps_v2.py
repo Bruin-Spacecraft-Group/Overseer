@@ -1,6 +1,6 @@
 
 from subprocess import run
-from json import
+from json import loads
 
 # capture values of keys ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"]
 
