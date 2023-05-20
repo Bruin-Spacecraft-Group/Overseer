@@ -196,7 +196,7 @@ class FlightControlUnit:
             f.write(out)
         with open(self.f+"_2"+".csv", "a+") as f:
             f.write(out)
-        with open(self.f+"_3", "a+") as f:
+        with open(self.f+"_3"+".csv", "a+") as f:
             f.write(out)
         # 7. Print to console
         print(out)
