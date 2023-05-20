@@ -121,43 +121,43 @@ class FlightControlUnit:
                     json_out = json_loaded
                     break
         try:
-            rets.append(json_out["lat"])
+            rets.append(str(json_out["lat"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["lon"])
+            rets.append(str(json_out["lon"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["altHAE"])
+            rets.append(str(json_out["altHAE"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["epx"])
+            rets.append(str(json_out["epx"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["epy"])
+            rets.append(str(json_out["epy"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["epv"])
+            rets.append(str(json_out["epv"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["speed"])
+            rets.append(str(json_out["speed"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["climb"])
+            rets.append(str(json_out["climb"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["eps"])
+            rets.append(str(json_out["eps"]))
         except:
             rets.append("e")
         try:
-            rets.append(json_out["epc"])
+            rets.append(str(json_out["epc"]))
         except:
             rets.append("e")
         return rets
