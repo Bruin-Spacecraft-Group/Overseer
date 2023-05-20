@@ -116,10 +116,10 @@ class FlightControlUnit:
         with open("gps_data.json", "r") as f:
             gps_data = []
             for line in f:
-            json_loaded = loads(line)
-            if json_loaded["class"] == "TPV":
-                json_out = json_loaded
-                break
+                json_loaded = loads(line)
+                if json_loaded["class"] == "TPV":
+                    json_out = json_loaded
+                    break
         try:
             rets.append(json_out["lat"])
         except:
