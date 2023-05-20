@@ -38,6 +38,10 @@ def cutdown():
     pin.on()
     time.sleep(4)
     pin.off()
+    sleep(2)
+    pin.on()
+    sleep(4)
+    pin.off()
 
 
 monitor_file_path = "~/FLIGHT_DATA_S23/flight_output.txt"
