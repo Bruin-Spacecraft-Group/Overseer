@@ -11,48 +11,7 @@ def gps():
     for line in f:
       json_loaded = json.loads(line)
       if json_loaded["class"] == "TPV":
-        try:
-          gps_data.append(json_loaded["lat"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["lon"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["altHAE"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["epx"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["epy"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["epv"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["speed"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["climb"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["eps"])
-        except:
-          pass
-        try:
-          gps_data.append(json_loaded["epc"])
-        except:
-          pass
-        return gps_data
-
+        return json_loaded
 
 
 print(gps())
