@@ -1,5 +1,6 @@
 
 from subprocess import run
+from json import
 
 # capture values of keys ["lat", "lon", "altHAE", "epx", "epy", "epv", "speed", "climb", "eps", "epc"]
 
