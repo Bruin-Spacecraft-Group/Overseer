@@ -27,29 +27,29 @@ class FlightControlUnit:
         try:
             self.cpu = CPUTemperature()
         except:
-            print("Error initializing CPU")
+            pass
         try:
             self.camera = PiCamera()
         except:
-            print("Error initializing camera")
+            pass
         try:
             self.camera.resolution = (1920, 1080)
         except:
-            print("Error setting camera resolution")
+            pass
         try:
             self.i2c = board.I2C()  # MPU defaults 0x68, BME defaults 0x77
         except:
-            print("Error initializing I2C")
+            pass
         try:
             self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
         except:
-            print("Error initializing MPU6050")
+            pass
         try:
             self.bme680 = adafruit_bme680.Adafruit_BME680_I2C(self.i2c)
             # change this to match the location's pressure (hPa) at sea level
             self.bme680.sea_level_pressure = 1014.22
         except:
-            print("Error initializing BME680")
+            pass
 
     # 1. CPU Health - print temp, clock, volt, top; returns print_out, json_out
 
@@ -191,15 +191,16 @@ class FlightControlUnit:
         except:
             gps_out = {"1": "e", "2": "e", "3": "e", "4": "e", "5": "e", "6": "e", "7": "e", "8": "e", "9": "e", "10": "e"}
         # 6. Write to file
-        out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + ",".join(gps_out) + "\n"
+        print_out = cpu_out + "," + camera_out + "," + mpu_out + "," + bme_out + "," + ",".join(gps_out) + "\n"
+        write_out = datetime.now().strftime("%H:%M:%S") + "," + print_out
         with open(self.f+"_1.csv", "a+") as f:
-            f.write(out)
+            f.write(write_out)
         with open(self.f+"_2"+".csv", "a+") as f:
-            f.write(out)
+            f.write(write_out)
         with open(self.f+"_3"+".csv", "a+") as f:
-            f.write(out)
+            f.write(write_out)
         # 7. Print to console
-        print(out)
+        print(print_out)
 
 
 # Try each function
