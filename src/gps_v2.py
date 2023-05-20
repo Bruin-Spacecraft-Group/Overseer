@@ -13,9 +13,8 @@ def gps():
     for line in f:
       json_loaded = json.loads(line)
       if json_loaded["class"] == "TPV":
-        json_data = json_loaded
+        json_out = json_loaded
         break
-  json_out = rets[0]
   try:
     rets.append(json_out["lat"])
   except:
@@ -59,4 +58,4 @@ def gps():
   return rets
 
 
-print(gps()[0])
+print(gps())
