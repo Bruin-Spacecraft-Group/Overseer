@@ -1,0 +1,112 @@
+Number 1. American Fire: Latitude 39.12, Longitude -120.65
+Number 2. Swedes Fire: Latitude 39.446268, Longitude -121.38236
+Number 3. Kyburz Fire: Latitude 38.774, Longitude -120.298
+Number 4. Plumas Lightning Complex (Hough): Latitude 40.00842, Longitude -120.764666
+Number 5. Summit Fire: Latitude 39.439, Longitude -121.497
+Number 6. Union Fire: Latitude 38.682378, Longitude -120.839075
+Number 7. Branch Fire: Latitude 39.6612, Longitude -121.50354
+Number 8. McGanney Fire: Latitude 39.206, Longitude -121.31634
+Number 9. Tyler Fire: Latitude 39.333401, Longitude -121.107022
+Number 10. Empire Fire: Latitude 38.89555, Longitude -120.84716
+Number 11. King Fire: Latitude 38.805437, Longitude -120.629714
+Number 12. Dog Bar Fire: Latitude 39.113682, Longitude -120.999508
+Number 13. Boca Fire: Latitude 39.3918, Longitude -120.0805
+Number 14. Hutto Fire: Latitude 39.1871, Longitude -121.2687
+Number 15. Bible Fire: Latitude 38.608336, Longitude -120.703238
+Number 16. Cascade Fire: Latitude 38.9195001, Longitude -120.1140659
+Number 17. Lowell Fire: Latitude 39.192088, Longitude -120.882313
+Number 18. Lumpkin Fire: Latitude 39.5218, Longitude -121.3363
+Number 19. Swedes Fire: Latitude 39.43963, Longitude -121.38794
+Number 20. Creek Fire: Latitude 40.400196, Longitude -120.553075
+Number 21. Cook Fire: Latitude 39.2688, Longitude -121.26471
+Number 22. Ward Fire: Latitude 40.050833333333, Longitude -120.70166666667
+Number 23. Kyburz Fire: Latitude 38.776, Longitude -120.404
+Number 24. Center Fire: Latitude 40.400196, Longitude -120.553075
+Number 25. McCourtney Fire: Latitude 39.081, Longitude -121.194
+Number 26. Francis Fire: Latitude 39.33303, Longitude -121.18735
+Number 27. Baxter Fire: Latitude 38.9361, Longitude -121.1548
+Number 28. Trailhead Fire: Latitude 38.96741, Longitude -120.9375
+Number 29. Trailhead Fire: Latitude 38.96741, Longitude -120.9375
+Number 30. Willard Fire: Latitude 40.3915, Longitude -120.7845
+Number 31. Tobin Fire: Latitude 39.92, Longitude -121.32
+Number 32. Emerald Fire: Latitude 38.93449, Longitude -120.10744
+Number 33. Bangor Fire: Latitude 39.4403, Longitude -121.42647
+Number 34. Storksbill Fire: Latitude 38.79549, Longitude -121.00299
+Number 35. Auburn Fire: Latitude 39.20427, Longitude -121.05948
+Number 36. Phoenix Fire: Latitude 39.39051, Longitude -120.51887
+Number 37. Aukum Fire: Latitude 38.64107, Longitude -120.6955
+Number 38. Long Valley Fire: Latitude 40.07045, Longitude -120.14013
+Number 39. Cascade Fire (Wind Complex): Latitude 39.32198, Longitude -121.4021
+Number 40. Cherokee Fire: Latitude 39.62496, Longitude -121.52966
+Number 41. LaPorte Fire (Wind Complex): Latitude 39.39455, Longitude -121.40613
+Number 42. Mud Fire: Latitude 40.43962, Longitude -120.22215
+Number 43. Wall Fire: Latitude 39.45352, Longitude -121.41222
+Number 44. Minerva Fire: Latitude 39.9034, Longitude -120.9761
+Number 45. Ponderosa Fire: Latitude 39.57701, Longitude -121.30209
+Number 46. Eureka Fire: Latitude 39.75312, Longitude -120.75485
+Number 47. Chilcoot Fire: Latitude 39.75371, Longitude -120.1397
+Number 48. Beale Fire: Latitude 39.1234, Longitude -121.32957
+Number 49. Poslin Fire: Latitude 39.888, Longitude -120.066
+Number 50. Lobo Fire (Wind Complex): Latitude 39.24549, Longitude -121.12792
+Number 51. Farad Fire: Latitude 39.439722, Longitude -120.027222
+Number 52. Table Fire: Latitude 38.848, Longitude -120.287
+Number 53. Pleasant Fire: Latitude 39.34292, Longitude -121.12004
+Number 54. Toll Fire: Latitude 39.9864, Longitude -120.89746
+Number 55. Evans Fire: Latitude 39.71101, Longitude -120.02325
+Number 56. Honcut Fire: Latitude 39.37192, Longitude -121.53865
+Number 57. Mills File: Latitude 40.13278, Longitude -120.9204
+Number 58. McCourtney Fire (Wind Complex): Latitude 39.19325, Longitude -121.08406
+Number 59. Axel Fire: Latitude 38.7803, Longitude -120.97111
+Number 60. River Fire: Latitude 40.03392, Longitude -120.1064
+Number 61. West Fire: Latitude 39.06308, Longitude -121.303
+Number 62. Spenceville Fire: Latitude 39.06522, Longitude -121.3519
+Number 63. Ice Fire: Latitude 38.77921, Longitude -120.46234
+Number 64. Jasper Fire: Latitude 39.03168, Longitude -121.40947
+Number 65. Highway Fire: Latitude 39.364, Longitude -121.4143
+Number 66. Garden Fire: Latitude 39.06414, Longitude -121.13737
+Number 67. Lakeland Fire: Latitude 39.53944, Longitude -121.54722
+Number 68. Greenhorn Fire: Latitude 39.16826, Longitude -120.95498
+Number 69. Woodland Fire: Latitude 38.69775, Longitude -120.73757
+Number 70. Grizzly Fire: Latitude 39.36902, Longitude -120.97586
+Number 71. Rebie Fire: Latitude 39.50475, Longitude -121.33785
+Number 72. Brewer Fire: Latitude 39.08382, Longitude -121.06656
+Number 73. Twenty Fire: Latitude 39.23205, Longitude -121.376
+Number 74. Oroville Spillway : Latitude 39.51158, Longitude -121.55633
+Number 75. Camp Fire: Latitude 39.8134, Longitude -121.4347
+Number 76. North Fire: Latitude 39.268611, Longitude -120.658333
+Number 77. Tumbleweed Fire: Latitude 40.3768, Longitude -120.36403
+Number 78. June Fire: Latitude 39.36529, Longitude -121.51707
+Number 79. Hyatt Fire: Latitude 40.316137, Longitude -120.45053
+Number 80. Roxie Fire (Formerly 1-1 Fire): Latitude 40.34822, Longitude -120.82497
+Number 81. Sliger Fire: Latitude 38.94388, Longitude -120.92611
+Number 82. Murphy Fire: Latitude 39.996944, Longitude -121.27
+Number 83. Bumper Fire: Latitude 38.645, Longitude -120.874167
+Number 84. Omega Fire: Latitude 38.82128, Longitude -121.03918
+Number 85. Copper Fire: Latitude 40.33642, Longitude -120.93005
+Number 86. Simmons Fire: Latitude 39.57202, Longitude -121.43131
+Number 87. Oregon Fire: Latitude 39.549167, Longitude -121.521111
+Number 88. French Fire: Latitude 39.89075, Longitude -120.18499
+Number 89. Oak Fire: Latitude 39.10494, Longitude -121.07039
+Number 90. 3-2 Fire: Latitude 39.99309, Longitude -120.02137
+Number 91. Meyers Fire: Latitude 38.7448, Longitude -120.65672
+Number 92. Dark Fire: Latitude 39.66492, Longitude -121.51772
+Number 93. Walker Fire: Latitude 40.061389, Longitude -120.680556
+Number 94. Caples Fire: Latitude 38.724, Longitude -120.145
+Number 95. Long Valley Fire : Latitude 39.892222, Longitude -120.029722
+Number 96. Jasper Fire: Latitude 39.631945, Longitude -119.769881
+Number 97. Swedes Fire: Latitude 39.45296, Longitude -121.412619
+Number 98. Doyle Fire: Latitude 40.072739, Longitude -120.158273
+Number 99. Horse Fire: Latitude 40.562, Longitude -120.544
+Number 100. Country Fire: Latitude 38.898915, Longitude -120.946657
+Number 101. Scott Fire: Latitude 39.24678, Longitude -121.32399
+Number 102. Scott Fire: Latitude 39.24678, Longitude -121.32399
+Number 103. Sugar Fire: Latitude 39.11536, Longitude -120.76088
+Number 104. Forbestown Fire: Latitude 39.470333, Longitude -121.412333
+Number 105. Horse Fire: Latitude 40.387772, Longitude -120.304341
+Number 106. Far Fire: Latitude 39.06066, Longitude -121.35014
+Number 107. Patterson Fire: Latitude 38.652475, Longitude -120.826165
+Number 108. Heavy Range Fire: Latitude 39.171091, Longitude -121.423281
+Number 109. Greenstone Fire : Latitude 38.703889, Longitude -120.890556
+Number 110. Carson Fire: Latitude 38.757636, Longitude -120.75664
+Number 111. Mayberry Fire : Latitude 39.32889, Longitude -121.23431
+Number 112. Long Fire: Latitude 39.40972222, Longitude -121.00055556
