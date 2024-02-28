@@ -1,0 +1,8 @@
+The goal for this project is to learn about file I/O and data processing.
+Your task is to edit wildfire_extraction.py so that it reads the data from California_Fire_Incidents.csv,
+finds which fires are within a 1 degree radius of Tahoe (lat:39.5624, long:120.5635),
+then outputs the resulting fires to output_coordinates.txt.
+
+There are a couple files you can use for reference:
+- file_reading_demo.py shows you how to read from a file (reads from test.txt)
+- example_output.txt shows the properly formatted answer
