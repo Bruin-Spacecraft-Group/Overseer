@@ -6,3 +6,6 @@ then outputs the resulting fires to output_coordinates.txt.
 There are a couple files you can use for reference:
 - file_reading_demo.py shows you how to read from a file (reads from test.txt)
 - example_output.txt shows the properly formatted answer
+
+IMPORTANT: once you make your changes, please push them to separate branch in github named <development-First_Last> 
+^ eg. development-Srikar_Nimmagadda
