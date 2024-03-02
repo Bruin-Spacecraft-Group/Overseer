@@ -5,7 +5,7 @@ def read_coordinates_from_csv(file_path):
     coordinates = []
     names = []
 
-    #TODO: open the csv file, read it using csv.DictReader, add coordinates (lat,long) and names to arrays
+    #TODO: open the csv file, read it using csv.DictReader, line by line check if the fire is within the distance, if so add coords/name to array
     #       - remember we want to get fires within a one degree radius of Tahoe (39.5624° N, 120.5635° W) <-- how can we do this?
 
     return coordinates, names
