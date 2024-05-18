@@ -25,3 +25,6 @@ class MyCamera:
             reached_threshold = True
 
         return reached_threshold
+    
+    def __del__(self):
+        self.camera.close()
