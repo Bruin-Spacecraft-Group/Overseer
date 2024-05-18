@@ -23,11 +23,13 @@ class TempPress:
         self.temperature_offset = -5
 
     def record_tp(self):
-        print("\nTemperature: %0.1f C" % (self.bme680.temperature + self.temperature_offset))
-        print("Gas: %d ohm" % self.bme680.gas)
-        print("Humidity: %0.1f %%" % self.bme680.relative_humidity)
-        print("Pressure: %0.3f hPa" % self.bme680.pressure)
-        print("Altitude = %0.2f meters" % self.bme680.altitude)
+        return {
+            "Temperature": (self.bme680.temperature + self.temperature_offset),
+            "Gas": self.bme680.gas,
+            "Humidity": self.bme680.relative_humidity,
+            "Pressure": self.bme680.pressure,
+            "Altitude": self.bme680.altitude
+        }
 
     
     time.sleep(1)

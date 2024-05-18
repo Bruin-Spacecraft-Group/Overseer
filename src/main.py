@@ -13,6 +13,16 @@ from time import sleep
 import os
 
 from cam import cam_test
+from cpu_health import metrics
+from accelerometer import MPU_6050
+from temp_press import Temp_Press
+from gps import gps
+
+
+#TODO: edit add cutdown, reached_threshold so not hardcoded, fix camera output
+#TODO: see if can just say e for all if failure (may need more)
+#TODO: check json
+#TODO: see if while loop is valid
 
 class FlightControlUnit:
 
@@ -20,29 +30,78 @@ class FlightControlUnit:
         self.initStatus = True
         self.f = fname
 
+        self.cpu = metrics.CPUMetrics()
         self.camera = cam_test.MyCamera()
+        self.accelerometer = MPU_6050.accelerometer()
+        self.temp = Temp_Press.TempPress()
+        self.gps = gps.Ublox()
+        self.gps.start()
 
-    # 1. Camera - take a video; return json out
+    # 1. CPU - returns cpu health data as json
+    def __cpu_health(self):
+        return self.cpu.get_metrics()
+
+    # 2. Camera - take a video; return json out
     def __camera(self):
         cwd = os.getcwd()
         os.chdir("/home/overseer/FLIGHT_DATA_S24/PICTURES")
         vid_fname = datetime.now().strftime("%H-%M-%S") + ".h264"
         pic_fname = datetime.now().strftime("%H:%M:%S") + ".jpg"
-        self.camera.record_video(vid_fname, pic_fname, altitude=100,reached_threshold=False) #TODO: change so not hardcoded
+        self.camera.record_video(vid_fname, pic_fname, altitude=100,reached_threshold=False)
         os.chdir(cwd)
         return vid_fname
-    # TODO: insert other modules
+    
+    # 3. Accelerometer - gives accelerometer data
+    def __accelerometer(self):
+        return self.accelerometer.mpu_data()
+
+    # 4. Temp_Press - gives temp/pressure data
+    def __temp(self):
+        return self.temp.record_tp()
+
+    # 5. GPS - gives positional data
+    def __gps(self):
+        try:
+            gps.housekeeping()
+            return gps.GPSDAT
+        except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly
+            gps.stop()
+        except Exception as x:
+            raise x
 
     def run(self):
-        # 1. Camera - take a video/picture
+        #1. CPU - cpu health data
+        try:
+            cpu_out = self.__cpu_health()
+        except:
+            cpu_out = "e"
+
+        #2. Camera - take a video/picture
         try:
             camera_out = self.__camera()
         except:
             camera_out = "e"
-        #TODO: insert other modules
         
-        # Write to file
-        print_out = camera_out + "\n"
+        #3. accelerometer
+        try:
+            accelerometer_out = self.__accelerometer()
+        except:
+            accelerometer_out = "e"
+
+        #4. temp_press
+        try:
+            temp_out = self.__temp()
+        except:
+            temp_out = "e"
+
+        #5. GPS
+        try:
+            gps_out = self.__gps()
+        except:
+            gps_out = "e"
+        
+        #F. Write to file
+        print_out = cpu_out + "," + camera_out + "," + accelerometer_out + "," + temp_out + "," + gps_out + '\n'
         write_out = datetime.now().strftime("%H:%M:%S") + "," + print_out
         with open(self.f+"_1.csv", "a+") as f:
             f.write(write_out)
