@@ -31,5 +31,21 @@ class TempPress:
             "Altitude": self.bme680.altitude
         }
 
-    
-    time.sleep(1)
+def main():
+    tp_sensor = TempPress()
+
+    try:
+        while True:
+            data = tp_sensor.record_tp()
+            print(f"Temperature: {data['Temperature']} °C")
+            print(f"Gas Resistance: {data['Gas']} ohms")
+            print(f"Humidity: {data['Humidity']} %")
+            print(f"Pressure: {data['Pressure']} hPa")
+            print(f"Altitude: {data['Altitude']} meters")
+            print("-" * 30)
+            time.sleep(1)  # Delay for readability
+    except KeyboardInterrupt:
+        print("Program interrupted by the user.")
+
+if __name__ == "__main__":
+    main()
