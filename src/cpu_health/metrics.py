@@ -3,6 +3,7 @@ import psutil
 from typing import Literal
 from datetime import datetime
 from gpiozero import CPUTemperature
+import time
 
 
 class CPUMetrics:
@@ -29,8 +30,12 @@ class CPUMetrics:
     }
 
     def __init__(self, units: Literal["B", "KB", "MB", "GB"] = "MB", dp: int = 2, topn: int = 5) -> None:
-        SIZE = CPUMetrics.UNITS.get(units, CPUMetrics.UNITS["MB"])
+        self.SIZE = CPUMetrics.UNITS.get(units, CPUMetrics.UNITS["MB"])
+        self.dp = dp
+        self.topn = topn
 
+
+    def calculate_metrics(self) -> None:
         # Get CPU temperature
         try:
             self.cpu_temp = CPUTemperature().temperature
@@ -48,17 +53,17 @@ class CPUMetrics:
         ram_usage = os.popen('free -t -b').read().strip().split()
         ram_usage = ram_usage[ram_usage.index("Mem:", ) + 1: ram_usage.index("Swap:")]
         self.ram_data = {
-            "total": round(float(ram_usage[0]) / SIZE, dp),
-            "used": round(float(ram_usage[1]) / SIZE, dp),
-            "free": round(float(ram_usage[-1]) / SIZE, dp)
+            "total": round(float(ram_usage[0]) / self.SIZE, self.dp),
+            "used": round(float(ram_usage[1]) / self.SIZE, self.dp),
+            "free": round(float(ram_usage[-1]) / self.SIZE, self.dp)
         }
 
         # Get disk usage
         disk_usage = psutil.disk_usage("/")
         self.disk_data = {
-            "total": round(disk_usage.total / SIZE, dp),
-            "used": round(disk_usage.used / SIZE, dp),
-            "free": round(disk_usage.free / SIZE, dp)
+            "total": round(disk_usage.total / self.SIZE, self.dp),
+            "used": round(disk_usage.used / self.SIZE, self.dp),
+            "free": round(disk_usage.free / self.SIZE, self.dp)
         }
 
         # Get top 5 processes
@@ -66,13 +71,13 @@ class CPUMetrics:
         # Sort processes by memory usage
         processes = sorted(processes, key=lambda x: x.memory_info().rss, reverse=True)
         self.top_processes = []
-        for process in processes[:topn]:
+        for process in processes[:self.topn]:
             self.top_processes.append({
                 "pid": process.ppid(),
                 "name": process.name(),
                 "status": process.status(),
                 "started_at": datetime.fromtimestamp(process.create_time()).strftime("%Y-%m-%d %H:%M:%S"),
-                "memory_usage": round(process.memory_info().rss / SIZE, dp)
+                "memory_usage": round(process.memory_info().rss / self.SIZE, self.dp)
             })
 
     def get_metrics(self) -> dict:
@@ -94,6 +99,7 @@ class CPUMetrics:
         ]}
         ```
         """
+        self.calculate_metrics()
         return {
             "cpu_temp": self.cpu_temp,
             "cpu_ticks": self.cpu_freq,
@@ -112,4 +118,6 @@ if __name__ == "__main__":
         printer = print
 
     cpu_metrics = CPUMetrics()
+    printer(cpu_metrics.get_metrics())
+    time.sleep(5)
     printer(cpu_metrics.get_metrics())
