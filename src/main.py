@@ -2,6 +2,7 @@
 from decimal import Decimal
 import subprocess
 from json import loads
+import json
 from gpiozero import CPUTemperature
 from picamera import PiCamera
 from datetime import datetime
@@ -46,7 +47,8 @@ class FlightControlUnit:
 
     # 1. CPU - returns cpu health data as json
     def __cpu_health(self):
-        return self.cpu.get_metrics()
+        cpu_metrics = self.cpu.get_metrics()
+        return json.dumps(cpu_metrics)
 
     # 2. Camera - take a video; return json out
     def __camera(self):
@@ -55,22 +57,26 @@ class FlightControlUnit:
         vid_fname = datetime.now().strftime("%H-%M-%S") + ".h264"
         pic_fname = datetime.now().strftime("%H:%M:%S") + ".jpg"
         should_record = self.launch_threshold or self.cutdown_threshold
-        self.camera.record_video(vid_fname, pic_fname, should_record)
+        cam_files = self.camera.record_video(vid_fname, pic_fname, should_record)
         os.chdir(cwd)
-        return vid_fname
+
+        return json.dumps(cam_files)
     
     # 3. Accelerometer - gives accelerometer data
     def __accelerometer(self):
-        return self.accelerometer.mpu_data()
+        accelerometer_data = self.accelerometer.mpu_data()
+        return json.dumps(accelerometer_data)
 
     # 4. Temp_Press - gives temp/pressure data
     def __temp(self):
-        return self.temp.record_tp()
+        temp_pres_data = self.temp.record_tp()
+        return json.dumps(temp_pres_data)
 
     # 5. GPS - gives positional data
     def __gps(self):
         try:
             gps_data = gps.get_data()
+            json_out = gps_data
 
             #TODO: check initial altitude thresholds and pressure thresholds
 
@@ -87,7 +93,49 @@ class FlightControlUnit:
             else:
                 self.cutdown_threshold = False
 
-            return gps_data
+            # sets return string
+            gps_str = []
+            try:
+                rets.append(json_out["lat"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["lon"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["altHAE"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["epx"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["epy"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["epv"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["speed"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["climb"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["eps"])
+            except:
+                rets.append("e")
+            try:
+                rets.append(json_out["epc"])
+            except:
+                rets.append("e")
+            return rets
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly
             gps.stop()
         except Exception as x:
@@ -95,7 +143,8 @@ class FlightControlUnit:
         
     # 6. Relay - cuts down payload if reached altitude threshold
     def __relay(self):
-        return self.relay.cutdown(self.cutdown_threshold)
+        relay_data = self.relay.cutdown(self.cutdown_threshold)
+        return json.dumps(relay_data)
 
 
     def run(self):

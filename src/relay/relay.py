@@ -7,18 +7,19 @@ class Relay:
     def __init__(self):
         # set to relay IN GPIO # (not the pin number)
         self.pin = LED(27)
+	self.cutdown_data = {}
 
     def cutdown(self, cut_threshold):
-        msg = ""
+        self.cutdown_data['msg'] = ""
 
         if cut_threshold:
             #TODO: see how long it takes for the nichrome wire to heat up enough - adjust for high altitude
             self.pin.on()
             sleep(5)
             self.pin.off()
-            msg = "cutdown"
+            self.cutdown_data['msg'] = "cutdown"
 
-        return msg
+        return self.cutdown_data
 
 
 def main():

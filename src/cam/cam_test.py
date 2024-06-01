@@ -7,6 +7,7 @@ class MyCamera:
     def __init__(self):
         self.camera = Picamera2()
         self.camera.configure(self.camera.create_still_configuration(main={"size": (1920, 1080)}))
+        self.cam_data = {}
 
     #TODO: for future years would recommend making separate take picture and record video functions
     def record_video(self, vid_fname, pic_fname, should_record):
@@ -15,7 +16,11 @@ class MyCamera:
         self.camera.capture_file(pic_fname)
         self.camera.stop()
 
+        # set return dictionary
+        self.cam_data['pic_fname'] = pic_fname
+
         # Only records if main method specifies we should
+        self.cam_data['vid_fname'] = 'n'
         if should_record:
             # Record and save video
             self.camera.configure(self.camera.create_video_configuration(main={"size": (1920, 1080)}))
@@ -26,10 +31,10 @@ class MyCamera:
             self.camera.stop_recording()
             self.camera.stop()
 
-            # So we don't try recording again
-            reached_threshold = True
+            #add video file to return dict if created
+            self.cam_data['vid_fname'] = vid_fname
 
-        return reached_threshold
+        return self.cam_data
 
     def __del__(self):
         self.camera.close()
