@@ -17,6 +17,7 @@ from cpu_health import metrics
 from accelerometer import MPU_6050
 from temp_press import Temp_Press
 from gps import gps
+from relay import relay
 
 
 #TODO: edit add cutdown, reached_threshold so not hardcoded, fix camera output
@@ -27,7 +28,11 @@ from gps import gps
 class FlightControlUnit:
 
     def __init__(self, fname):
-        self.initStatus = True
+        self.init_status = True
+        self.launch_threshold = False
+        self.prev_launch_threshold = False
+        self.cutdown_threshold = False
+        self.prev_cutdown_threshold = False
         self.f = fname
 
         self.cpu = metrics.CPUMetrics()
@@ -35,6 +40,8 @@ class FlightControlUnit:
         self.accelerometer = MPU_6050.accelerometer()
         self.temp = Temp_Press.TempPress()
         self.gps = gps.Ublox()
+        self.relay = relay.Relay()
+
         self.gps.start()
 
     # 1. CPU - returns cpu health data as json
@@ -47,7 +54,8 @@ class FlightControlUnit:
         os.chdir("/home/overseer/FLIGHT_DATA_S24/PICTURES")
         vid_fname = datetime.now().strftime("%H-%M-%S") + ".h264"
         pic_fname = datetime.now().strftime("%H:%M:%S") + ".jpg"
-        self.camera.record_video(vid_fname, pic_fname, altitude=100,reached_threshold=False)
+        should_record = self.launch_threshold or self.cutdown_threshold
+        self.camera.record_video(vid_fname, pic_fname, should_record)
         os.chdir(cwd)
         return vid_fname
     
@@ -62,12 +70,33 @@ class FlightControlUnit:
     # 5. GPS - gives positional data
     def __gps(self):
         try:
-            gps.housekeeping()
-            return gps.GPSDAT
+            gps_data = gps.get_data()
+
+            #TODO: check initial altitude thresholds and pressure thresholds
+
+            # sets launch threshold to true the first time we hit 100m (to record a video)
+            if gps_data["alt"] > 100 and not self.prev_launch_threshold:
+                self.launch_threshold = True
+                self.prev_launch_threshold = True
+            else:
+                self.launch_threshold = False
+
+            if gps_data["alt"] > 100000 and not self.prev_cutdown_threshold:
+                self.cutdown_threshold = True
+                self.prev_cutdown_threshold = True
+            else:
+                self.cutdown_threshold = False
+
+            return gps_data
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly
             gps.stop()
         except Exception as x:
             raise x
+        
+    # 6. Relay - cuts down payload if reached altitude threshold
+    def __relay(self):
+        return self.relay.cutdown(self.cutdown_threshold)
+
 
     def run(self):
         #1. CPU - cpu health data
@@ -99,11 +128,23 @@ class FlightControlUnit:
             gps_out = self.__gps()
         except:
             gps_out = "e"
+
+        #6. Relay
+        try:
+            relay_out = self.__relay()
+        except:
+            relay_out = "e"
         
-        #F. Write to file
-        print_out = cpu_out + "," + camera_out + "," + accelerometer_out + "," + temp_out + "," + gps_out + '\n'
+        #F. Write to file (write to multiple for redundance)
+        print_out = cpu_out + "," + camera_out + "," + accelerometer_out + "," + temp_out + "," + gps_out + ',' + relay_out + '\n'
         write_out = datetime.now().strftime("%H:%M:%S") + "," + print_out
         with open(self.f+"_1.csv", "a+") as f:
+            f.write(write_out)
+        with open(self.f+"_2.csv", "a+") as f:
+            f.write(write_out)
+        with open(self.f+"_3.csv", "a+") as f:
+            f.write(write_out)
+        with open(self.f+"_4.csv", "a+") as f:
             f.write(write_out)
 
         # Print to console

@@ -9,14 +9,14 @@ class MyCamera:
         self.camera.configure(self.camera.create_still_configuration(main={"size": (1920, 1080)}))
 
     #TODO: for future years would recommend making separate take picture and record video functions
-    def record_video(self, vid_fname, pic_fname, altitude, reached_threshold):
+    def record_video(self, vid_fname, pic_fname, should_record):
         # Take a picture
         self.camera.start()
         self.camera.capture_file(pic_fname)
         self.camera.stop()
 
-        # Check if we reached 100 feet and if video not already taken
-        if altitude >= 100 and not reached_threshold:
+        # Only records if main method specifies we should
+        if should_record:
             # Record and save video
             self.camera.configure(self.camera.create_video_configuration(main={"size": (1920, 1080)}))
             self.camera.start()
@@ -42,12 +42,8 @@ def main():
     vid_fname = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".h264"
     pic_fname = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".jpg"
     
-    # Set the altitude and initial reached_threshold state
-    altitude = 150  # Example altitude in feet
-    reached_threshold = False
-    
     # Record video and take a picture
-    reached_threshold = camera.record_video(vid_fname, pic_fname, altitude, reached_threshold)
+    reached_threshold = camera.record_video(vid_fname, pic_fname, True)
     
     # Print the result
     if reached_threshold:

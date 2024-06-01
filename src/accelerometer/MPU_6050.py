@@ -5,7 +5,7 @@ import time
 class accelerometer:
     def __init__(self):
         self.i2c = board.I2C()
-        self.mpu = adafruit_mpu6050.MPU6050(i2c);
+        self.mpu = adafruit_mpu6050.MPU6050(self.i2c)
 
     def mpu_data(self):
         dic = {'Acceleration': self.mpu.acceleration, 'Gyro': self.mpu.gyro, 'Temperature': self.mpu.temperature}
