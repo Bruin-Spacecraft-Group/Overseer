@@ -2,7 +2,7 @@ import json
 import subprocess
 import time
 
-class GPS:
+class myGPS:
     def __init__(self):
         self.data_file = "gps_data.json"
 
@@ -25,7 +25,7 @@ class GPS:
         return self.parse_data()
 
 def main():
-    gps = GPS()
+    gps = myGPS()
 
     try:
         while True:

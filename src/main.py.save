@@ -11,17 +11,14 @@ import time
 #import adafruit_bme680
 from time import sleep
 import os
-import argparse
 
 from cam import cam_test
 from cpu_health import metrics
 from accelerometer import MPU_6050
 from temp_press import Temp_Press
-from gps_v2 import gps
+from gps import gps
 from relay import relay
 
-#TODO: accelerometer and temp/pres don't work currently (i2c error)
-#      have it instead hard coded to a cutdown time
 
 class FlightControlUnit:
 
@@ -33,14 +30,14 @@ class FlightControlUnit:
         self.prev_cutdown_threshold = False
         self.f = fname
 
-        self.start_time = datetime.now()
-
         self.cpu = metrics.CPUMetrics()
         self.camera = cam_test.MyCamera()
-#        self.accelerometer = MPU_6050.accelerometer()
-#        self.temp = Temp_Press.TempPress()
-        self.gps = gps.myGPS()
+        self.accelerometer = MPU_6050.accelerometer()
+        self.temp = Temp_Press.TempPress()
+        self.gps = gps.Ublox()
         self.relay = relay.Relay()
+
+        self.gps.start()
 
     # 1. CPU - returns cpu health data as json
     def __cpu_health(self):
@@ -50,7 +47,7 @@ class FlightControlUnit:
     # 2. Camera - take a video; return json out
     def __camera(self):
         cwd = os.getcwd()
-        os.chdir("/home/overseer4/FLIGHT_DATA_S24/PICTURES")
+        os.chdir("/home/overseer/FLIGHT_DATA_S24/PICTURES")
         vid_fname = datetime.now().strftime("%H-%M-%S") + ".h264"
         pic_fname = datetime.now().strftime("%H:%M:%S") + ".jpg"
         should_record = self.launch_threshold or self.cutdown_threshold
@@ -72,25 +69,11 @@ class FlightControlUnit:
     # 5. GPS - gives positional data
     def __gps(self):
         try:
-            gps_data = self.gps.get_gps_data()
+            gps_data = gps.get_data()
             json_out = gps_data
 
             #TODO: check initial altitude thresholds and pressure thresholds
-            #set launch threshold after 60 seconds
-            if (int((datetime.now() - self.start_time).total_seconds())) > 20 and not self.prev_launch_threshold:
-                self.launch_threshold = True
-                self.prev_launch_threshold = True
-            else:
-                self.launch_threshold = False
 
-            #set cutdown threshold after 2 hours
-            if (int((datetime.now() - self.start_time).total_seconds())) > 7200 and not self.prev_cutdown_threshold:
-                self.cutdown_threshold = True
-                self.prev_cutdown_threshold = True
-            else:
-                self.cutdown_threshold = False
-
-            """
             # sets launch threshold to true the first time we hit 100m (to record a video)
             if gps_data["alt"] > 100 and not self.prev_launch_threshold:
                 self.launch_threshold = True
@@ -103,10 +86,9 @@ class FlightControlUnit:
                 self.prev_cutdown_threshold = True
             else:
                 self.cutdown_threshold = False
-            """
 
             # sets return string
-            rets = []
+            gps_str = []
             try:
                 rets.append(json_out["lat"])
             except:
@@ -147,11 +129,10 @@ class FlightControlUnit:
                 rets.append(json_out["epc"])
             except:
                 rets.append("e")
-            return str(rets)
+            return rets
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly
-            self.gps.stop()
+            gps.stop()
         except Exception as x:
-            print(x)
             raise x
         
     # 6. Relay - cuts down payload if reached altitude threshold
@@ -161,17 +142,6 @@ class FlightControlUnit:
 
 
     def run(self):
-        # 0. Time since launch
-        try:
-            time_since_launch = {
-                "start_time": str(self.start_time),
-                "curr_time": str(datetime.now()),
-                "time_since_launch": int((datetime.now() - self.start_time).total_seconds())
-            }
-            time_out = json.dumps(time_since_launch)
-        except Exception as e:
-            time_out = "e"
-
         #1. CPU - cpu health data
         try:
             cpu_out = self.__cpu_health()
@@ -181,11 +151,9 @@ class FlightControlUnit:
         #2. Camera - take a video/picture
         try:
             camera_out = self.__camera()
-        except Exception as x:
-            print(x)
+        except:
             camera_out = "e"
-
-        """
+        
         #3. accelerometer
         try:
             accelerometer_out = self.__accelerometer()
@@ -197,7 +165,6 @@ class FlightControlUnit:
             temp_out = self.__temp()
         except:
             temp_out = "e"
-        """
 
         #5. GPS
         try:
@@ -212,7 +179,7 @@ class FlightControlUnit:
             relay_out = "e"
         
         #F. Write to file (write to multiple for redundance)
-        print_out = time_out + "," + cpu_out + "," + camera_out + "," + gps_out + ',' + relay_out + '\n'
+        print_out = cpu_out + "," + camera_out + "," + accelerometer_out + "," + temp_out + "," + gps_out + ',' + relay_out + '\n'
         write_out = datetime.now().strftime("%H:%M:%S") + "," + print_out
         with open(self.f+"_1.csv", "a+") as f:
             f.write(write_out)
@@ -228,20 +195,14 @@ class FlightControlUnit:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Flight Control Unit')
-    parser.add_argument('-t', '--test', action='store_true', help='Use the test directory for the flight log file')
-    args = parser.parse_args()
-
     # DO NOT ENTER FILE EXTENSION - only the name you want the base file to be, we save as .csv
-    log_directory = "/home/overseer4/FLIGHT_DATA_S24/TEST" if args.test else "/home/overseer4/FLIGHT_DATA_S24/DATA"
-    log_filename = "flight_log"
-    log_path = os.path.join(log_directory, log_filename)
-
-    fcu = FlightControlUnit(log_path)
+    fcu = FlightControlUnit(
+        "/home/overseer/FLIGHT_DATA_S24/DATA/flight_log")
     
     while True:
         fcu.run()
         time.sleep(30)
+
 
 if __name__ == "__main__":
     main()
